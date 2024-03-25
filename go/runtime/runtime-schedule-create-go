@@ -1,0 +1,5 @@
+graph { flow: south; }
+[go func]->[runtime.newproc1]->[malg && allgadd]->[runqput]
+[runqput] -> [runnext] - runnext空 ->[pp.runq=newg]->[runqput]
+[runnext] - runnext非空 -> [pp.runnext=newg]->[put oldg to pp.runq]- pp.runq full -> [runqputslow]->[runqput]
+[runqput]->[wakep]

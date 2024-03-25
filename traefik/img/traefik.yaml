@@ -1,0 +1,42 @@
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: true
+
+entryPoints:
+  name:
+    address: ":8888" # same as ":8888/tcp"
+    reusePort: true
+    http2:
+      maxConcurrentStreams: 42
+    http3:
+      advertisedPort: 8888
+    transport:
+      lifeCycle:
+        requestAcceptGraceTimeout: 42
+        graceTimeOut: 42
+      respondingTimeouts:
+        readTimeout: 42
+        writeTimeout: 42
+        idleTimeout: 42
+    proxyProtocol:
+      insecure: true
+      trustedIPs:
+        - "127.0.0.1"
+        - "192.168.0.1"
+    forwardedHeaders:
+      insecure: true
+      trustedIPs:
+        - "127.0.0.1"
+        - "192.168.0.1"
+
+log:
+  level: DEBUG
+  format: json
+
+providers:
+  kubernetesIngress:
+    endpoint:  https://node1.2pg.cn:6443
+    token: eyJhbGciOiJSUzI1NiIsImtpZCI6Imo3U01wZzk5cW05MGpRTDRVTG9BSXdDWXRLcjFqaE9uTG8tY0VfR21rVHcifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNzA5NjIzMjU2LCJpYXQiOjE3MDk2MTk2NTYsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJkZWZhdWx0Iiwic2VydmljZWFjY291bnQiOnsibmFtZSI6InRyYWVmaWstYWNjb3VudCIsInVpZCI6IjRkYzI4YjA0LWU1ZmMtNDJmYS1hZDVhLWY4YzcyMjRlY2I2ZiJ9fSwibmJmIjoxNzA5NjE5NjU2LCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6ZGVmYXVsdDp0cmFlZmlrLWFjY291bnQifQ.aeApIgzDOmlm8_N_ljM2GOEl6FVgMc9iLJRDOJaqPF1e_SJzoYshntAc7dj_GAepheWExXiJQ3RBABUbwf_H4AfxKT_RYrS6vs72hQbYxC3oP136_8F-w-hFlCizsKKdYMPxedR-6QQEHdFLSmD9HN8fmIdmVJzrhoSJEYN0NPusikDKc_kVW7H6mYjKQ7VbhpUxC10tqSVhTrpp3RcP5VhwQKTpdzbO4kCqOTRKAzGkfz_wI4jADRbDiPix9dsrxqT1tiVgkSGN-HR4rDfgU-vdjbKB5vdL1H1Dnn7Z_LCqBso27fMDwdhtwk0O58xHZS7KN_wKMZhrJPYj8tmabA
+    certAuthFilePath:
+    ingressClass: "traefik"
+    allowEmptyServices: true

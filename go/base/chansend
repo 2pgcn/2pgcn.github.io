@@ -1,0 +1,7 @@
+[channel] - chan is nil -> [gopark]
+[channel] - chan not nil -> [non blocking]
+[non blocking]- is close && full -> [return false]
+[non blocking] --> [lock] - get sudog ->  [send]
+[send] --> [copy data] --> [goready]
+[lock] - not sudog -> [chan] - buf没满 -> [put data]
+[chan] - buf满了 -> [pack sudog && enqueue] -> [go park && schedule]

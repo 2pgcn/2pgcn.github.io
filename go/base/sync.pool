@@ -1,0 +1,4 @@
+graph { flow: south; }
+(pool:[pool|noCopy|local|localSize|victim|victimSize|New])
+[local]->[poolLocal]
+
