@@ -1,0 +1,622 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>apiserver访问控制</title>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-NBTSW2TH');</script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-N6K15VE892"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-N6K15VE892');
+        </script>
+        <!-- End Google Tag Manager -->
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NBTSW2TH"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../index.html"><strong aria-hidden="true">1.</strong> 最近更新</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.</strong> golang</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.1.</strong> golang基础数据结构</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../go/base/1.channel详解.html"><strong aria-hidden="true">2.1.1.</strong> channel</a></li><li class="chapter-item "><a href="../../go/base/2.time详解.html"><strong aria-hidden="true">2.1.2.</strong> time</a></li><li class="chapter-item "><a href="../../go/base/3.select详解.html"><strong aria-hidden="true">2.1.3.</strong> select</a></li><li class="chapter-item "><a href="../../go/base/4.sync上.html"><strong aria-hidden="true">2.1.4.</strong> sync上</a></li><li class="chapter-item "><a href="../../go/base/5.sync下.html"><strong aria-hidden="true">2.1.5.</strong> sync下</a></li><li class="chapter-item "><a href="../../go/base/6.map详解.html"><strong aria-hidden="true">2.1.6.</strong> map</a></li><li class="chapter-item "><a href="../../go/base/7.slice详解.html"><strong aria-hidden="true">2.1.7.</strong> slice</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> golang runtime源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../go/runtime/1.golang源码阅读-go-start.html"><strong aria-hidden="true">2.2.1.</strong> go启动流程</a></li><li class="chapter-item "><a href="../../go/runtime/2.golang源码阅读-schedule1.html"><strong aria-hidden="true">2.2.2.</strong> schedule上</a></li><li class="chapter-item "><a href="../../go/runtime/3.golang源码阅读-schedule2.html"><strong aria-hidden="true">2.2.3.</strong> schedule下</a></li><li class="chapter-item "><a href="../../go/runtime/4.golang源码阅读-sysmon详解.html"><strong aria-hidden="true">2.2.4.</strong> sysmon详解</a></li><li class="chapter-item "><a href="../../go/runtime/5.golang源码阅读-内存分配.html"><strong aria-hidden="true">2.2.5.</strong> 内存分配</a></li><li class="chapter-item "><a href="../../go/runtime/6.golang源码阅读-netpoll详解.html"><strong aria-hidden="true">2.2.6.</strong> netpoll详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.3.</strong> golang杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.3.1.</strong> 长连接无损迁移</div></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> 队列</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">3.1.</strong> kafka</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 云原生</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">4.1.</strong> 前置知识</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/base/k8s核心对象.html"><strong aria-hidden="true">4.1.1.</strong> k8s核心对象</a></li><li class="chapter-item "><a href="../../k8s/base/docker详解.html"><strong aria-hidden="true">4.1.2.</strong> docker原理</a></li><li class="chapter-item "><a href="../../k8s/base/pod详解.html"><strong aria-hidden="true">4.1.3.</strong> pod详解</a></li><li class="chapter-item "><a href="../../k8s/base/k8s-schedule详解.html"><strong aria-hidden="true">4.1.4.</strong> schedule</a></li><li class="chapter-item expanded "><a href="../../k8s/base/apiserver访问控制.html" class="active"><strong aria-hidden="true">4.1.5.</strong> apiserver访问控制</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.2.</strong> 网关</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.2.1.</strong> traefik</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/traefik/1.traefik基础概念.html"><strong aria-hidden="true">4.2.1.1.</strong> traefik基础概念</a></li><li class="chapter-item "><a href="../../gateway/traefik/4.traefik启动流程源码分析.html"><strong aria-hidden="true">4.2.1.2.</strong> traefik启动流程</a></li><li class="chapter-item "><a href="../../gateway/traefik/5.traefik-EntryPoints详解上.html"><strong aria-hidden="true">4.2.1.3.</strong> traefik-EntryPoints详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/6.traefik-router详解.html"><strong aria-hidden="true">4.2.1.4.</strong> traefik-router详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/7.traefik-services详解.html"><strong aria-hidden="true">4.2.1.5.</strong> traefik-services详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/8.traefik-provider详解.html"><strong aria-hidden="true">4.2.1.6.</strong> traefik-provider详解</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.3.</strong> serviceMesh</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.4.</strong> k8s控制器源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/controller/replicaset详解.html"><strong aria-hidden="true">4.4.1.</strong> replicaset详解</a></li><li class="chapter-item "><a href="../../k8s/controller/deploy详解.html"><strong aria-hidden="true">4.4.2.</strong> deploy详解</a></li><li class="chapter-item "><a href="../../k8s/controller/endpoint详解.html"><strong aria-hidden="true">4.4.3.</strong> endpoint详解</a></li><li class="chapter-item "><a href="../../k8s/controller/services详解.html"><strong aria-hidden="true">4.4.4.</strong> services详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.5.</strong> k8s cni源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/cni/cni详解.html"><strong aria-hidden="true">4.5.1.</strong> cni基础</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.6.</strong> k8s cri源码分析</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 网络</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../network/tcp-1-环境.html"><strong aria-hidden="true">5.1.</strong> 环境</a></li><li class="chapter-item "><a href="../../network/icmp.html"><strong aria-hidden="true">5.2.</strong> icmp协议</a></li><li class="chapter-item "><a href="../../network/tcp-2-三次握手.html"><strong aria-hidden="true">5.3.</strong> tcp三次握手</a></li><li class="chapter-item "><a href="../../network/tcp压测客户端.html"><strong aria-hidden="true">5.4.</strong> tcp压测</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../other/linux1-ssh连接失败.html"><strong aria-hidden="true">6.1.</strong> ssh连接失败</a></li><li class="chapter-item "><a href="../../other/freeswitch_install.html"><strong aria-hidden="true">6.2.</strong> freeswitch安装</a></li><li class="chapter-item "><a href="../../other/freeswitch搭建呼叫中心-1方案设计.html"><strong aria-hidden="true">6.3.</strong> 呼叫中心设计</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> nginx</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/nginx/nginx1-搭建调试环境.html"><strong aria-hidden="true">7.1.</strong> 开发环境</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx2-基础架构.html"><strong aria-hidden="true">7.2.</strong> 基础架构</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx3-基础数据结构.html"><strong aria-hidden="true">7.3.</strong> 基础数据结构</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx4-内存管理.html"><strong aria-hidden="true">7.4.</strong> 内存管理</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx5-http.html"><strong aria-hidden="true">7.5.</strong> http</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx6-手写hello-handler.html"><strong aria-hidden="true">7.6.</strong> 手写handler</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="详解apiserver"><a class="header" href="#详解apiserver">详解apiserver</a></h1>
+<p>apiserver一个请求的生命周期为从一个请求到认证,鉴权,准入,限流，持久化(etcd存储),流程完整如下图
+<img src="img/apiserver.png" alt="apiserver.png" />
+我们先分析下上图左边的handler chain,对应的调用链handler chain核心代码如下</p>
+<pre><code class="language-go">//kubernetes/kubernetes/staging/src/k8s.io/apiserver/pkg/server/config.go
+func DefaultBuildHandlerChain(apiHandler http.Handler, c *Config) http.Handler {
+	handler := apiHandler
+	handler = filterlatency.TrackCompleted(handler)
+	handler = genericapifilters.WithAuthorization(handler, c.Authorization.Authorizer, c.Serializer)
+	handler = filterlatency.TrackStarted(handler, c.TracerProvider, &quot;authorization&quot;)
+    
+	if c.FlowControl != nil {
+		workEstimatorCfg := flowcontrolrequest.DefaultWorkEstimatorConfig()
+		requestWorkEstimator := flowcontrolrequest.NewWorkEstimator(
+			c.StorageObjectCountTracker.Get, c.FlowControl.GetInterestedWatchCount, workEstimatorCfg, c.FlowControl.GetMaxSeats)
+		handler = filterlatency.TrackCompleted(handler)
+		handler = genericfilters.WithPriorityAndFairness(handler, c.LongRunningFunc, c.FlowControl, requestWorkEstimator)
+		handler = filterlatency.TrackStarted(handler, c.TracerProvider, &quot;priorityandfairness&quot;)
+	} else {
+		handler = genericfilters.WithMaxInFlightLimit(handler, c.MaxRequestsInFlight, c.MaxMutatingRequestsInFlight, c.LongRunningFunc)
+	}
+
+	handler = filterlatency.TrackCompleted(handler)
+	handler = genericapifilters.WithImpersonation(handler, c.Authorization.Authorizer, c.Serializer)
+	handler = filterlatency.TrackStarted(handler, c.TracerProvider, &quot;impersonation&quot;)
+
+	handler = filterlatency.TrackCompleted(handler)
+	handler = genericapifilters.WithAudit(handler, c.AuditBackend, c.AuditPolicyRuleEvaluator, c.LongRunningFunc)
+	handler = filterlatency.TrackStarted(handler, c.TracerProvider, &quot;audit&quot;)
+
+	failedHandler := genericapifilters.Unauthorized(c.Serializer)
+	failedHandler = genericapifilters.WithFailedAuthenticationAudit(failedHandler, c.AuditBackend, c.AuditPolicyRuleEvaluator)
+
+	failedHandler = filterlatency.TrackCompleted(failedHandler)
+	handler = filterlatency.TrackCompleted(handler)
+	handler = genericapifilters.WithAuthentication(handler, c.Authentication.Authenticator, failedHandler, c.Authentication.APIAudiences, c.Authentication.RequestHeaderConfig)
+	handler = filterlatency.TrackStarted(handler, c.TracerProvider, &quot;authentication&quot;)
+
+	handler = genericfilters.WithCORS(handler, c.CorsAllowedOriginList, nil, nil, nil, &quot;true&quot;)
+
+	// WithTimeoutForNonLongRunningRequests will call the rest of the request handling in a go-routine with the
+	// context with deadline. The go-routine can keep running, while the timeout logic will return a timeout to the client.
+	handler = genericfilters.WithTimeoutForNonLongRunningRequests(handler, c.LongRunningFunc)
+
+	handler = genericapifilters.WithRequestDeadline(handler, c.AuditBackend, c.AuditPolicyRuleEvaluator,
+		c.LongRunningFunc, c.Serializer, c.RequestTimeout)
+	handler = genericfilters.WithWaitGroup(handler, c.LongRunningFunc, c.NonLongRunningRequestWaitGroup)
+	if c.ShutdownWatchTerminationGracePeriod &gt; 0 {
+		handler = genericfilters.WithWatchTerminationDuringShutdown(handler, c.lifecycleSignals, c.WatchRequestWaitGroup)
+	}
+	if c.SecureServing != nil &amp;&amp; !c.SecureServing.DisableHTTP2 &amp;&amp; c.GoawayChance &gt; 0 {
+		handler = genericfilters.WithProbabilisticGoaway(handler, c.GoawayChance)
+	}
+	handler = genericapifilters.WithWarningRecorder(handler)
+	handler = genericapifilters.WithCacheControl(handler)
+	handler = genericfilters.WithHSTS(handler, c.HSTSDirectives)
+	if c.ShutdownSendRetryAfter {
+		handler = genericfilters.WithRetryAfter(handler, c.lifecycleSignals.NotAcceptingNewRequest.Signaled())
+	}
+	handler = genericfilters.WithHTTPLogging(handler)
+	if utilfeature.DefaultFeatureGate.Enabled(genericfeatures.APIServerTracing) {
+		handler = genericapifilters.WithTracing(handler, c.TracerProvider)
+	}
+	handler = genericapifilters.WithLatencyTrackers(handler)
+	handler = genericapifilters.WithRequestInfo(handler, c.RequestInfoResolver)
+	handler = genericapifilters.WithRequestReceivedTimestamp(handler)
+	handler = genericapifilters.WithMuxAndDiscoveryComplete(handler, c.lifecycleSignals.MuxAndDiscoveryComplete.Signaled())
+	handler = genericfilters.WithPanicRecovery(handler, c.RequestInfoResolver)
+	handler = genericapifilters.WithAuditInit(handler)
+	return handler
+}
+</code></pre>
+<h2 id="authentication"><a class="header" href="#authentication">Authentication</a></h2>
+<p>请求到达后,首先即进行认证,方式以下几种</p>
+<ul>
+<li>X509证书 </li>
+<li>静态Token文件</li>
+<li>引导Token: 如通过kubeadm初始化集群时创建,以Secret的形式保存在kube-system ns中</li>
+<li>静态密码文件</li>
+<li>ServiceAccount：有kubernetes自动生成,会被自动挂在到pod /run/secrets/kubernetes.io/serviceaccount目录中</li>
+<li>OpenID</li>
+<li>Webhook 令牌身份认证</li>
+<li>匿名请求<br />
+Authentication对应的chain为<code>genericapifilters.WithAuthentication</code>,下面我们看下具体的实现</li>
+<li>通过<code> auth.AuthenticateRequest</code>进行认证,每种类型都实现了该接口,认证成功后删除header头里<code>Authorization</code></li>
+</ul>
+<pre><code class="language-go">//staging/src/k8s.io/apiserver/pkg/endpoints/filters/authentication.go
+func WithAuthentication(handler http.Handler, auth authenticator.Request, failed http.Handler, apiAuds authenticator.Audiences, requestHeaderConfig *authenticatorfactory.RequestHeaderConfig) http.Handler {
+	return withAuthentication(handler, auth, failed, apiAuds, requestHeaderConfig, recordAuthenticationMetrics)
+}
+func withAuthentication(handler http.Handler, auth authenticator.Request, failed http.Handler, apiAuds authenticator.Audiences, requestHeaderConfig *authenticatorfactory.RequestHeaderConfig, metrics authenticationRecordMetricsFunc) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+		authenticationStart := time.Now()
+		//具体的认证逻辑,便利所有的认证方式,成功一个即可
+		resp, ok, err := auth.AuthenticateRequest(req)
+		
+		// authorization header is not required anymore in case of a successful authentication.
+		req.Header.Del(&quot;Authorization&quot;)
+		req = req.WithContext(genericapirequest.WithUser(req.Context(), resp.User))
+		handler.ServeHTTP(w, req)
+	})
+}
+</code></pre>
+<h2 id="audit"><a class="header" href="#audit">Audit</a></h2>
+<p>审计日志相关,有用到在分析,具体代码在<code>genericapifilters.WithAudit</code>,感兴趣可自行查看</p>
+<h2 id="maxinflight-apiserver限流"><a class="header" href="#maxinflight-apiserver限流">MaxInFlight apiserver限流</a></h2>
+<p>传统的常见的限流方案如下,一般情况是够用的,最大的问题是单队列,当出现一个客户端,发送超大请求/大量请求,导致其它请求全无法响应。同时无法按照不同用户/不同<br />
+系统进行优先级限流,所有请求一刀切</p>
+<ul>
+<li>固定窗口算法</li>
+<li>漏斗算法</li>
+<li>令牌筒算法</li>
+<li>bbr自适应保护基于cpu预测请求限流</li>
+<li>分布式极大极小限流
+优先级公平队列解决了上述单队列问题,同时提供优先级方案,在k8s 1.18后引入,具体如下图</li>
+<li>apiserver公平优先级队列限流(<a href="&#x27;https://github.com/kubernetes/enhancements/blob/master/keps/sig-api-machinery/1040-priority-and-fairness/README.html">提案地址</a>)
+<img src="img/apiserver-limit.png" alt="apiserver-limit.png" />
+如图所示,我们介绍下限流里的概念</li>
+<li>flowschemas 例如有SABC四种级别的请求,flowschemas代表不同的级别请求,将不同的请求定义分类</li>
+</ul>
+<pre><code class="language-yaml"># 删掉了部分属性
+apiVersion: flowcontrol.apiserver.k8s.io/v1beta3
+spec:
+  matchingPrecedence: 1 #匹配优先级,从上到下按优先级匹配
+  priorityLevelConfiguration: #关联的priorityLevel,也就是优先级队列具体的配置
+    name: exempt # 优先级队列名称
+  rules:
+  - nonResourceRules:
+    - nonResourceURLs: #简单来说就是apiserver在etcd存储数据的路径,例如/api/v1/namespaces,可正则过滤掉这些请求
+    #省略部分。。。
+    resourceRules:
+    #省略部分。。。
+    subjects:
+    - group:
+        name: system:masters
+      kind: Group
+</code></pre>
+<ul>
+<li>PriorityLevel 代表flowschemas的配置</li>
+</ul>
+<pre><code class="language-yaml">#k get PriorityLevelConfiguration workload-low -o yaml
+kind: PriorityLevelConfiguration
+spec:
+  limited:
+    lendablePercent: 90 #当前级别的优先级
+    limitResponse:
+      queuing:
+        handSize: 6 #shuffle sharding 的配置，每个flowschema+distinguisher的请求会被enqueue到多少个对列
+        queueLengthLimit: 50 #每个队列中的对象数量
+        queues: 128 #当前PriorityLevel的队列总数
+      type: Queue
+    nominalConcurrencyShares: 100 # 最大并发
+  type: Limited
+</code></pre>
+<h2 id="限流代码分析"><a class="header" href="#限流代码分析">限流代码分析</a></h2>
+<p>下面我们来看下具体的代码,本文仅分析apf(优先级公平队列) 具体的逻辑在<code> cfgCtlr.Handle</code>里,其它代码暂时先跳过</p>
+<pre><code class="language-go">//staging/src/k8s.io/apiserver/pkg/server /config.go
+handler = genericfilters.WithPriorityAndFairness(handler, c.LongRunningFunc, c.FlowControl, requestWorkEstimator)
+    //staging/src/k8s.io/apiserver/pkg/server/filters/priority-and-fairness.go
+    return http.HandlerFunc(priorityAndFairnessHandler.Handle)
+        func (h *priorityAndFairnessHandler) Handle(w http.ResponseWriter, r *http.Request) {}
+            h.fcIfc.Handle(ctx, digest, noteFn, estimateWork, queueNote, execute)
+                //staging/src/k8s.io/apiserver/pkg/util/flowcontrol/apf_filter.go
+                func (cfgCtlr *configController) Handle(ctx context.Context, requestDigest RequestDigest,...)
+                    cfgCtlr.startRequest(ctx, requestDigest, noteFn, workEstimator, queueNoteFn)
+</code></pre>
+<p>handle主要分为两部分</p>
+<ul>
+<li>获取请求的fs和pl,以及是否是豁免请求,对应<code>cfgCtlr.startRequest</code>，以及请求入队</li>
+<li>等待出队,以及根据apf对应的类型,通过/apf拒绝/上下文超时 <code> req.Finish</code></li>
+</ul>
+<pre><code class="language-go">//staging/src/k8s.io/apiserver/pkg/util/flowcontrol/apf_filter.go
+func (cfgCtlr *configController) Handle(ctx context.Context, requestDigest RequestDigest,
+	noteFn func(fs *flowcontrol.FlowSchema, pl *flowcontrol.PriorityLevelConfiguration, flowDistinguisher string),
+	workEstimator func() fcrequest.WorkEstimate,
+	queueNoteFn fq.QueueNoteFn,
+	execFn func()) {
+	//req存在,则代表请求可入队/豁免请求,fs为匹配的flowSchemas,pl为匹配的priorityLevel
+	fs, pl, isExempt, req, startWaitingTime := cfgCtlr.startRequest(ctx, requestDigest, noteFn, workEstimator, queueNoteFn)
+	queued := startWaitingTime != time.Time{}
+	var executed bool
+	//请求被唤醒标记
+	idle = req.Finish(func() {
+		metrics.AddDispatch(ctx, pl.Name, fs.Name)
+		executed = true
+		startExecutionTime := cfgCtlr.clock.Now()
+		defer func() {
+			//添加上队列里的等待时间
+			executionTime := cfgCtlr.clock.Since(startExecutionTime)
+			httplog.AddKeyValue(ctx, &quot;apf_execution_time&quot;, executionTime)
+		}()
+		//请求执行
+		execFn()
+	})
+}
+//staging/src/k8s.io/apiserver/pkg/util/flowcontrol/fairqueuing/queueset/queueset.go
+func (req *request) Finish(execFn func()) bool {
+	//等待限流执行完毕,放行/队列满拒绝/上下文超时
+	exec, idle := req.wait()
+	if !exec {
+		return idle
+	}
+	func() {
+		defer func() {
+			//很多地方有该方法,调度一次优先级队列的调度,涉及如清空一些超时的请求
+			idle = req.qs.finishRequestAndDispatchAsMuchAsPossible(req)
+		}()
+
+		execFn()
+	}()
+	return idle
+}
+</code></pre>
+<p>请求入队代码,先查看匹配到哪个flowschema,都未匹配则catchAll兜底,然后根据配置获取PriorityLevel
+回顾下配置,PriorityLevel是有多条队列,例如100个优先级队列,本fs可使用其中的6条</p>
+<pre><code class="language-go">func (cfgCtlr *configController) startRequest(ctx context.Context, rd RequestDigest,
+	noteFn func(fs *flowcontrol.FlowSchema, pl *flowcontrol.PriorityLevelConfiguration, flowDistinguisher string),
+	workEstimator func() fcrequest.WorkEstimate,
+	queueNoteFn fq.QueueNoteFn) (fs *flowcontrol.FlowSchema, pl *flowcontrol.PriorityLevelConfiguration, isExempt bool, req fq.Request, startWaitingTime time.Time) {
+	cfgCtlr.lock.RLock()
+	defer cfgCtlr.lock.RUnlock()
+	var selectedFlowSchema, catchAllFlowSchema *flowcontrol.FlowSchema
+	//cfgCtlr.flowSchemas = kubectl get flowschemas,根据优先级匹配
+	for _, fs := range cfgCtlr.flowSchemas {
+		if matchesFlowSchema(rd, fs) {
+			selectedFlowSchema = fs
+			break
+		}
+		//flowschemas catch-all 兜底,都匹配不上则走catch-all
+		if fs.Name == flowcontrol.FlowSchemaNameCatchAll {
+			catchAllFlowSchema = fs
+		}
+	}
+	//priorityLevelConfiguration
+	plName := selectedFlowSchema.Spec.PriorityLevelConfiguration.Name
+	plState := cfgCtlr.priorityLevelStates[plName]
+	var numQueues int32
+	var hashValue uint64
+	var flowDistinguisher string
+	//匹配上了且不是豁免请求,需要限流,获取该flowSchema的队列数,根据flowschema.spec.distinguisherMethod.type: ByUser/namespace获取hashid
+	if plState.pl.Spec.Type != flowcontrol.PriorityLevelEnablementExempt {
+		if plState.pl.Spec.Limited.LimitResponse.Type == flowcontrol.LimitResponseTypeQueue {
+			numQueues = plState.pl.Spec.Limited.LimitResponse.Queuing.Queues
+		}
+		if numQueues &gt; 1 {
+			flowDistinguisher = computeFlowDistinguisher(rd, selectedFlowSchema.Spec.DistinguisherMethod)
+			hashValue = hashFlowID(selectedFlowSchema.Name, flowDistinguisher)
+		}
+	}
+	//return nil表示拒绝该请求,idle 队列是否空闲
+	req, idle := plState.queues.StartRequest(ctx, &amp;workEstimate, hashValue, flowDistinguisher, selectedFlowSchema.Name, rd.RequestInfo, rd.User, queueNoteFn)
+	return selectedFlowSchema, plState.pl, plState.pl.Spec.Type == flowcontrol.PriorityLevelEnablementExempt, req, startWaitingTime
+}
+</code></pre>
+<p><code>plState.queues.StartRequest</code>入队的具体逻辑,总体分为以下几部分</p>
+<ul>
+<li>使用哪个队列,先根据FlowSchema.name以及by user/by namespace得到hashid,然后调用洗牌算法分配队列,得到队列index</li>
+<li>
+<ul>
+<li>洗牌算法分配队列见<a href="&#x27;https://github.com/kubernetes/enhancements/blob/master/keps/sig-api-machinery/1040-priority-and-fairness/README.html#assignment-to-a-queue&#x27;">提案介绍</a></li>
+</ul>
+</li>
+<li>移除超时请求,同时设置req.decision,对应上文中req.Finish里的wait()方法,wait监测到之后,拒绝/放行,该handler结束</li>
+</ul>
+<h3 id="queueset"><a class="header" href="#queueset">queueset</a></h3>
+<pre><code class="language-go">func (qs *queueSet) StartRequest(ctx context.Context, workEstimate *fqrequest.WorkEstimate, hashValue uint64, flowDistinguisher, fsName string, descr1, descr2 interface{}, queueNoteFn fq.QueueNoteFn) (fq.Request, bool) {
+	qs.lockAndSyncTime(ctx)
+	defer qs.lock.Unlock()
+	var req *request
+	//省略豁免请求代码
+	//req表示要创建放入队列里的请求,为nil则表示拒绝
+	req = qs.timeoutOldRequestsAndRejectOrEnqueueLocked(ctx, workEstimate, hashValue, flowDistinguisher, fsName, descr1, descr2, queueNoteFn)
+    //简单来说就是执行调度,将过期的请求清空掉
+	qs.dispatchAsMuchAsPossibleLocked()
+	return req, false
+}
+//staging/src/k8s.io/apiserver/pkg/util/flowcontrol/fairqueuing/queueset/queueset.go
+func (qs *queueSet) timeoutOldRequestsAndRejectOrEnqueueLocked(ctx context.Context, workEstimate *fqrequest.WorkEstimate, hashValue uint64, flowDistinguisher, fsName string, descr1, descr2 interface{}, queueNoteFn fq.QueueNoteFn) *request {
+	//根据洗牌算法确认分配的队列
+	queueIdx := qs.shuffleShardLocked(hashValue, descr1, descr2)
+	queue := qs.queues[queueIdx]
+	//将超时请求移除
+	qs.removeTimedOutRequestsFromQueueToBoundLocked(queue, fsName)
+	
+	defer qs.boundNextDispatchLocked(queue)
+
+	// Create a request and enqueue
+	req := &amp;request{
+		qs:                qs,
+		fsName:            fsName,
+		flowDistinguisher: flowDistinguisher,
+		ctx:               ctx,
+		decision:          qs.promiseFactory(nil, ctx, decisionCancel),
+		arrivalTime:       qs.clock.Now(),
+		arrivalR:          qs.currentR,
+		queue:             queue,
+		descr1:            descr1,
+		descr2:            descr2,
+		queueNoteFn:       queueNoteFn,
+		workEstimate:      qs.completeWorkEstimate(workEstimate),
+	}
+	//调用出队方法,很多地方都有调用，上文handler里也有看到,同时会设置req.decision
+	if ok := qs.rejectOrEnqueueToBoundLocked(req); !ok {
+		return nil
+	}
+	return req
+}
+</code></pre>
+<h2 id="authorization"><a class="header" href="#authorization">Authorization</a></h2>
+<p>鉴权相关,具体代码在<code>genericapifilters.WithAuthorization</code>,授权方式有很多,最常见的RBAC,还有如通过webhook接入内部的系统
+同上Authentication方法,便利authorize有一个实现即可</p>
+<pre><code class="language-go">//staging/src/k8s.io/apiserver/pkg/endpoints/filters/authorization.go
+// WithAuthorization passes all authorized requests on to handler, and returns a forbidden error otherwise.
+func WithAuthorization(hhandler http.Handler, auth authorizer.Authorizer, s runtime.NegotiatedSerializer) http.Handler {
+	return withAuthorization(hhandler, auth, s, recordAuthorizationMetrics)
+}
+
+func withAuthorization(handler http.Handler, a authorizer.Authorizer, s runtime.NegotiatedSerializer, metrics recordAuthorizationMetricsFunc) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+		ctx := req.Context()
+		authorizationStart := time.Now()
+        //从请求中获取如user,veb等等信息
+		attributes, err := GetAuthorizerAttributes(ctx)
+		if err != nil {
+			responsewriters.InternalError(w, req, err)
+			return
+		}
+		//具体的授权方法
+		authorized, reason, err := a.Authorize(ctx, attributes)
+		authorizationFinish := time.Now()
+        //通过授权
+		if authorized == authorizer.DecisionAllow {
+			audit.AddAuditAnnotations(ctx,
+				decisionAnnotationKey, decisionAllow,
+				reasonAnnotationKey, reason)
+			handler.ServeHTTP(w, req)
+			return
+		}
+	})
+}
+</code></pre>
+<h2 id="admissionwebhook"><a class="header" href="#admissionwebhook">AdmissionWebhook</a></h2>
+<p>准入控制器,针对增删改资源的时候暴露的两个hook点,Mutate修改提交的资源,Validate验证提交的资源,很多crd用来防止资源误删等,后文详细介绍</p>
+<h2 id="rest-logic"><a class="header" href="#rest-logic">REST logic</a></h2>
+<p>apiserver请求最终到etcd的逻辑,在启动apiserver的时候通过<code>registerResourceHandlers</code>对资源的增删改查各种请求进行注册,后文结合AdmissionWebhook详细介绍</p>
+<pre><code class="language-go">//staging/src/k8s.io/apiserver/pkg/endpoints/installer.go
+</code></pre>
+<h2 id="持久化存储etcd"><a class="header" href="#持久化存储etcd">持久化存储etcd</a></h2>
+<p>我们结合create请求来看如何存储在etcd中</p>
+<pre><code class="language-go">//staging/src/k8s.io/apiserver/pkg/storage/etcd3/store.go
+func (s *store) Create(ctx context.Context, key string, obj, out runtime.Object, ttl uint64) error {
+    //key example /api/v1/namespaces/default/pods
+	//value example k get po nginx -o yaml
+	//encode 数据
+	data, err := runtime.Encode(s.codec, obj)
+	if err != nil {
+		span.AddEvent(&quot;Encode failed&quot;, attribute.Int(&quot;len&quot;, len(data)), attribute.String(&quot;err&quot;, err.Error()))
+		return err
+	}
+    //ttl时间
+	opts, err := s.ttlOpts(ctx, int64(ttl))
+	if err != nil {
+		return err
+	}
+    //data
+	newData, err := s.transformer.TransformToStorage(ctx, data, authenticatedDataString(preparedKey))
+    //如果不存在则创建
+	startTime := time.Now()
+	txnResp, err := s.client.KV.Txn(ctx).If(
+		notFound(preparedKey),
+	).Then(
+		clientv3.OpPut(preparedKey, string(newData), opts...),
+	).Commit()
+	return nil
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../k8s/base/k8s-schedule详解.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../gateway/traefik/1.traefik基础概念.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../k8s/base/k8s-schedule详解.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../gateway/traefik/1.traefik基础概念.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

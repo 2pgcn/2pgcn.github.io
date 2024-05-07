@@ -1,0 +1,392 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>基础数据结构</title>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-NBTSW2TH');</script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-N6K15VE892"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-N6K15VE892');
+        </script>
+        <!-- End Google Tag Manager -->
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NBTSW2TH"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../index.html"><strong aria-hidden="true">1.</strong> 最近更新</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.</strong> golang</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.1.</strong> golang基础数据结构</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../go/base/1.channel详解.html"><strong aria-hidden="true">2.1.1.</strong> channel</a></li><li class="chapter-item "><a href="../../go/base/2.time详解.html"><strong aria-hidden="true">2.1.2.</strong> time</a></li><li class="chapter-item "><a href="../../go/base/3.select详解.html"><strong aria-hidden="true">2.1.3.</strong> select</a></li><li class="chapter-item "><a href="../../go/base/4.sync上.html"><strong aria-hidden="true">2.1.4.</strong> sync上</a></li><li class="chapter-item "><a href="../../go/base/5.sync下.html"><strong aria-hidden="true">2.1.5.</strong> sync下</a></li><li class="chapter-item "><a href="../../go/base/6.map详解.html"><strong aria-hidden="true">2.1.6.</strong> map</a></li><li class="chapter-item "><a href="../../go/base/7.slice详解.html"><strong aria-hidden="true">2.1.7.</strong> slice</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> golang runtime源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../go/runtime/1.golang源码阅读-go-start.html"><strong aria-hidden="true">2.2.1.</strong> go启动流程</a></li><li class="chapter-item "><a href="../../go/runtime/2.golang源码阅读-schedule1.html"><strong aria-hidden="true">2.2.2.</strong> schedule上</a></li><li class="chapter-item "><a href="../../go/runtime/3.golang源码阅读-schedule2.html"><strong aria-hidden="true">2.2.3.</strong> schedule下</a></li><li class="chapter-item "><a href="../../go/runtime/4.golang源码阅读-sysmon详解.html"><strong aria-hidden="true">2.2.4.</strong> sysmon详解</a></li><li class="chapter-item "><a href="../../go/runtime/5.golang源码阅读-内存分配.html"><strong aria-hidden="true">2.2.5.</strong> 内存分配</a></li><li class="chapter-item "><a href="../../go/runtime/6.golang源码阅读-netpoll详解.html"><strong aria-hidden="true">2.2.6.</strong> netpoll详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.3.</strong> golang杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.3.1.</strong> 长连接无损迁移</div></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> 队列</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">3.1.</strong> kafka</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 云原生</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.1.</strong> 前置知识</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/base/k8s核心对象.html"><strong aria-hidden="true">4.1.1.</strong> k8s核心对象</a></li><li class="chapter-item "><a href="../../k8s/base/docker详解.html"><strong aria-hidden="true">4.1.2.</strong> docker原理</a></li><li class="chapter-item "><a href="../../k8s/base/pod详解.html"><strong aria-hidden="true">4.1.3.</strong> pod详解</a></li><li class="chapter-item "><a href="../../k8s/base/k8s-schedule详解.html"><strong aria-hidden="true">4.1.4.</strong> schedule</a></li><li class="chapter-item "><a href="../../k8s/base/apiserver访问控制.html"><strong aria-hidden="true">4.1.5.</strong> apiserver访问控制</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.2.</strong> 网关</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.2.1.</strong> traefik</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/traefik/1.traefik基础概念.html"><strong aria-hidden="true">4.2.1.1.</strong> traefik基础概念</a></li><li class="chapter-item "><a href="../../gateway/traefik/4.traefik启动流程源码分析.html"><strong aria-hidden="true">4.2.1.2.</strong> traefik启动流程</a></li><li class="chapter-item "><a href="../../gateway/traefik/5.traefik-EntryPoints详解上.html"><strong aria-hidden="true">4.2.1.3.</strong> traefik-EntryPoints详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/6.traefik-router详解.html"><strong aria-hidden="true">4.2.1.4.</strong> traefik-router详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/7.traefik-services详解.html"><strong aria-hidden="true">4.2.1.5.</strong> traefik-services详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/8.traefik-provider详解.html"><strong aria-hidden="true">4.2.1.6.</strong> traefik-provider详解</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.3.</strong> serviceMesh</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.4.</strong> k8s控制器源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/controller/replicaset详解.html"><strong aria-hidden="true">4.4.1.</strong> replicaset详解</a></li><li class="chapter-item "><a href="../../k8s/controller/deploy详解.html"><strong aria-hidden="true">4.4.2.</strong> deploy详解</a></li><li class="chapter-item "><a href="../../k8s/controller/endpoint详解.html"><strong aria-hidden="true">4.4.3.</strong> endpoint详解</a></li><li class="chapter-item "><a href="../../k8s/controller/services详解.html"><strong aria-hidden="true">4.4.4.</strong> services详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.5.</strong> k8s cni源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/cni/cni详解.html"><strong aria-hidden="true">4.5.1.</strong> cni基础</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.6.</strong> k8s cri源码分析</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 网络</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../network/tcp-1-环境.html"><strong aria-hidden="true">5.1.</strong> 环境</a></li><li class="chapter-item "><a href="../../network/icmp.html"><strong aria-hidden="true">5.2.</strong> icmp协议</a></li><li class="chapter-item "><a href="../../network/tcp-2-三次握手.html"><strong aria-hidden="true">5.3.</strong> tcp三次握手</a></li><li class="chapter-item "><a href="../../network/tcp压测客户端.html"><strong aria-hidden="true">5.4.</strong> tcp压测</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../other/linux1-ssh连接失败.html"><strong aria-hidden="true">6.1.</strong> ssh连接失败</a></li><li class="chapter-item "><a href="../../other/freeswitch_install.html"><strong aria-hidden="true">6.2.</strong> freeswitch安装</a></li><li class="chapter-item "><a href="../../other/freeswitch搭建呼叫中心-1方案设计.html"><strong aria-hidden="true">6.3.</strong> 呼叫中心设计</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> nginx</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/nginx/nginx1-搭建调试环境.html"><strong aria-hidden="true">7.1.</strong> 开发环境</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx2-基础架构.html"><strong aria-hidden="true">7.2.</strong> 基础架构</a></li><li class="chapter-item expanded "><a href="../../gateway/nginx/nginx3-基础数据结构.html" class="active"><strong aria-hidden="true">7.3.</strong> 基础数据结构</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx4-内存管理.html"><strong aria-hidden="true">7.4.</strong> 内存管理</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx5-http.html"><strong aria-hidden="true">7.5.</strong> http</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx6-手写hello-handler.html"><strong aria-hidden="true">7.6.</strong> 手写handler</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="string"><a class="header" href="#string">string</a></h2>
+<p>nginx_str_主要解决c语言 \0截断的问题，网络字节流中可能出现\0截断问题
+下面对比下可能的设计对应的不足</p>
+<pre><code class="language-c">//1 柔性数组 使用场景
+//printf 很不方便且必须连续内存(内存池分配),长度确定 str长度修改后内存分配问题
+//一般用来不定长数据的传输
+struct ngx_str_t {
+    int len;
+    char data[0]; //首字母
+}
+</code></pre>
+<!--more-->
+<pre><code class="language-c">//2 nginx采用的指针数组
+#nginx可以重复引用一段字符串内存，data可以指向任意内存，长度表示结束，
+#而不用去copy一份自己的字符串
+struct ngx_str_t {
+    int len;
+    char *data
+}
+//常见的宏
+//字符串初始化
+#define ngx_string(str)     { sizeof(str) - 1, (u_char *) str }
+...
+</code></pre>
+<h2 id="动态数组"><a class="header" href="#动态数组">动态数组</a></h2>
+<pre><code class="language-c">typedef struct {
+    void        *elts; //数据指针,实际存储的数据
+    ngx_uint_t   nelts; //已存储数组元素个数
+    size_t       size; //每个数组大小
+    ngx_uint_t   nalloc; //分配的数组总个数
+    ngx_pool_t  *pool; //对应内存池
+} ngx_array_t;
+
+//创建数组,内存池地址,数组元素个数,数组元素大小
+ngx_array_t *ngx_array_create(ngx_pool_t *p, ngx_uint_t n, size_t size);
+//如果是池中最后一个,且池还没满,会从池中扩容
+//if (u_char *) a-&gt;elts + size == p-&gt;d.last &amp;&amp; p-&gt;d.last + a-&gt;size &lt;= p-&gt;d.end
+//否则扩容2倍
+void *ngx_array_push(ngx_array_t *a);
+void *ngx_array_push_n(ngx_array_t *a, ngx_uint_t n);
+</code></pre>
+<pre><code class="language-go">//补充go的切片 1.18之前扩容1.25大于1024固定两倍
+doublecap := newcap + newcap
+if cap &gt; doublecap {
+    newcap = cap
+} else {
+    if old.len &lt; 1024 {
+        newcap = doublecap
+    } else {
+        for 0 &lt; newcap &amp;&amp; newcap &lt; cap {
+            newcap += newcap / 4
+        }
+        if newcap &lt;= 0 {
+            newcap = cap
+        }
+    }
+}
+
+//1.18之后 256内为两倍,256后每次为(newcap += (newcap + 3*threshold) / 4)直到分配到需要的容量
+const threshold = 256
+if old.cap &lt; threshold {
+    newcap = doublecap
+} else {
+    // Check 0 &lt; newcap to detect overflow
+    // and prevent an infinite loop.
+    for 0 &lt; newcap &amp;&amp; newcap &lt; cap {
+    // Transition from growing 2x for small slices
+    // to growing 1.25x for large slices. This formula
+    // gives a smooth-ish transition between the two.
+        newcap += (newcap + 3*threshold) / 4
+    }
+    // Set newcap to the requested cap when
+    // the newcap calculation overflowed.
+    if newcap &lt;= 0 {
+        newcap = cap
+    }
+}
+</code></pre>
+<h2 id="list"><a class="header" href="#list">list</a></h2>
+<pre><code class="language-c">//节点数据
+struct ngx_list_part_s {
+    void             *elts; //指向的内存块 大小size_t*ngx_uint_t
+    ngx_uint_t        nelts; //已经使用了多少个
+    ngx_list_part_t  *next; //下一个节点地址
+};
+//链表 节点大小都是一致 在一整块内存中
+typedef struct {
+    ngx_list_part_t  *last; //最后一个节点指针
+    ngx_list_part_t   part; //第一个节点内容
+    size_t            size; //size_t 每个节点大小
+    ngx_uint_t        nalloc; //数量
+    ngx_pool_t       *pool; //内存池地址
+} ngx_list_t;
+//初始化
+ngx_list_t *ngx_list_create(ngx_pool_t *pool, ngx_uint_t n, size_t size);
+ngx_list_init(ngx_list_t *list, ngx_pool_t *pool, ngx_uint_t n, size_t size)
+
+//只需要增加 同数组一样,返回内存地址,由用户自定义值,满了后,开辟新内存池
+//释放直接释放整个pool
+void *ngx_list_push(ngx_list_t *list);
+</code></pre>
+<h2 id="队列"><a class="header" href="#队列">队列</a></h2>
+<pre><code class="language-c">//双向循环链表，只有前后节点指针,我们来看数据是怎么存储的
+struct ngx_queue_s {
+    ngx_queue_t  *prev;
+    ngx_queue_t  *next;
+};
+//宏获取节点数据
+//link 偏移量 相对于type 结构体开头字节的偏移量,偏移量则是queue在test的位置
+//如struct test{int a;int b;ngx_queue_t queue;}
+#define ngx_queue_data(q, type, link)                                         \
+    (type *) ((u_char *) q - offsetof(type, link))
+</code></pre>
+<h2 id="哈希表"><a class="header" href="#哈希表">哈希表</a></h2>
+<p>一般哈希表实现为拉链法,开放地址寻址法,nginx采用的为开放地址寻址,当key冲突时像后便利,
+散列值+1的地方是否有值存在,存在则继续向后便利,直到无值占用该位置,取值同理</p>
+<pre><code class="language-c">//在nginx中 主要存储http head头
+typedef struct {
+    ngx_uint_t        hash;         //key hash值
+    ngx_str_t         key;          //header key 如Status Code
+    ngx_str_t         value;        //header value 如200
+    u_char           *lowcase_key;  //key 全小写,
+} ngx_table_elt_t;
+
+//文件内存块
+struct ngx_chain_s {
+    ngx_buf_t    *buf;
+    ngx_chain_t  *next;
+};
+
+struct ngx_buf_s {
+    u_char          *pos; //内容起始
+    u_char          *last; //内容结束
+    off_t            file_pos; //文件定位开始
+    off_t            file_last; //文件结束位置
+    u_char          *start;         /* start of buffer */
+    u_char          *end;           /* end of buffer */
+    ngx_buf_tag_t    tag;
+    ngx_file_t      *file;
+    ngx_buf_t       *shadow;
+    ......
+};
+</code></pre>
+<h2 id="红黑树基数树"><a class="header" href="#红黑树基数树">红黑树,基数树</a></h2>
+<pre><code class="language-c">//后续补充
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../gateway/nginx/nginx2-基础架构.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../gateway/nginx/nginx4-内存管理.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../gateway/nginx/nginx2-基础架构.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../gateway/nginx/nginx4-内存管理.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

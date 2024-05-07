@@ -1,0 +1,433 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>pod详解</title>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-NBTSW2TH');</script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-N6K15VE892"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-N6K15VE892');
+        </script>
+        <!-- End Google Tag Manager -->
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NBTSW2TH"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../index.html"><strong aria-hidden="true">1.</strong> 最近更新</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.</strong> golang</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.1.</strong> golang基础数据结构</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../go/base/1.channel详解.html"><strong aria-hidden="true">2.1.1.</strong> channel</a></li><li class="chapter-item "><a href="../../go/base/2.time详解.html"><strong aria-hidden="true">2.1.2.</strong> time</a></li><li class="chapter-item "><a href="../../go/base/3.select详解.html"><strong aria-hidden="true">2.1.3.</strong> select</a></li><li class="chapter-item "><a href="../../go/base/4.sync上.html"><strong aria-hidden="true">2.1.4.</strong> sync上</a></li><li class="chapter-item "><a href="../../go/base/5.sync下.html"><strong aria-hidden="true">2.1.5.</strong> sync下</a></li><li class="chapter-item "><a href="../../go/base/6.map详解.html"><strong aria-hidden="true">2.1.6.</strong> map</a></li><li class="chapter-item "><a href="../../go/base/7.slice详解.html"><strong aria-hidden="true">2.1.7.</strong> slice</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> golang runtime源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../go/runtime/1.golang源码阅读-go-start.html"><strong aria-hidden="true">2.2.1.</strong> go启动流程</a></li><li class="chapter-item "><a href="../../go/runtime/2.golang源码阅读-schedule1.html"><strong aria-hidden="true">2.2.2.</strong> schedule上</a></li><li class="chapter-item "><a href="../../go/runtime/3.golang源码阅读-schedule2.html"><strong aria-hidden="true">2.2.3.</strong> schedule下</a></li><li class="chapter-item "><a href="../../go/runtime/4.golang源码阅读-sysmon详解.html"><strong aria-hidden="true">2.2.4.</strong> sysmon详解</a></li><li class="chapter-item "><a href="../../go/runtime/5.golang源码阅读-内存分配.html"><strong aria-hidden="true">2.2.5.</strong> 内存分配</a></li><li class="chapter-item "><a href="../../go/runtime/6.golang源码阅读-netpoll详解.html"><strong aria-hidden="true">2.2.6.</strong> netpoll详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.3.</strong> golang杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.3.1.</strong> 长连接无损迁移</div></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> 队列</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">3.1.</strong> kafka</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 云原生</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">4.1.</strong> 前置知识</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/base/k8s核心对象.html"><strong aria-hidden="true">4.1.1.</strong> k8s核心对象</a></li><li class="chapter-item "><a href="../../k8s/base/docker详解.html"><strong aria-hidden="true">4.1.2.</strong> docker原理</a></li><li class="chapter-item expanded "><a href="../../k8s/base/pod详解.html" class="active"><strong aria-hidden="true">4.1.3.</strong> pod详解</a></li><li class="chapter-item "><a href="../../k8s/base/k8s-schedule详解.html"><strong aria-hidden="true">4.1.4.</strong> schedule</a></li><li class="chapter-item "><a href="../../k8s/base/apiserver访问控制.html"><strong aria-hidden="true">4.1.5.</strong> apiserver访问控制</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.2.</strong> 网关</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.2.1.</strong> traefik</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/traefik/1.traefik基础概念.html"><strong aria-hidden="true">4.2.1.1.</strong> traefik基础概念</a></li><li class="chapter-item "><a href="../../gateway/traefik/4.traefik启动流程源码分析.html"><strong aria-hidden="true">4.2.1.2.</strong> traefik启动流程</a></li><li class="chapter-item "><a href="../../gateway/traefik/5.traefik-EntryPoints详解上.html"><strong aria-hidden="true">4.2.1.3.</strong> traefik-EntryPoints详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/6.traefik-router详解.html"><strong aria-hidden="true">4.2.1.4.</strong> traefik-router详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/7.traefik-services详解.html"><strong aria-hidden="true">4.2.1.5.</strong> traefik-services详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/8.traefik-provider详解.html"><strong aria-hidden="true">4.2.1.6.</strong> traefik-provider详解</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.3.</strong> serviceMesh</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.4.</strong> k8s控制器源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/controller/replicaset详解.html"><strong aria-hidden="true">4.4.1.</strong> replicaset详解</a></li><li class="chapter-item "><a href="../../k8s/controller/deploy详解.html"><strong aria-hidden="true">4.4.2.</strong> deploy详解</a></li><li class="chapter-item "><a href="../../k8s/controller/endpoint详解.html"><strong aria-hidden="true">4.4.3.</strong> endpoint详解</a></li><li class="chapter-item "><a href="../../k8s/controller/services详解.html"><strong aria-hidden="true">4.4.4.</strong> services详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.5.</strong> k8s cni源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/cni/cni详解.html"><strong aria-hidden="true">4.5.1.</strong> cni基础</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.6.</strong> k8s cri源码分析</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 网络</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../network/tcp-1-环境.html"><strong aria-hidden="true">5.1.</strong> 环境</a></li><li class="chapter-item "><a href="../../network/icmp.html"><strong aria-hidden="true">5.2.</strong> icmp协议</a></li><li class="chapter-item "><a href="../../network/tcp-2-三次握手.html"><strong aria-hidden="true">5.3.</strong> tcp三次握手</a></li><li class="chapter-item "><a href="../../network/tcp压测客户端.html"><strong aria-hidden="true">5.4.</strong> tcp压测</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../other/linux1-ssh连接失败.html"><strong aria-hidden="true">6.1.</strong> ssh连接失败</a></li><li class="chapter-item "><a href="../../other/freeswitch_install.html"><strong aria-hidden="true">6.2.</strong> freeswitch安装</a></li><li class="chapter-item "><a href="../../other/freeswitch搭建呼叫中心-1方案设计.html"><strong aria-hidden="true">6.3.</strong> 呼叫中心设计</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> nginx</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/nginx/nginx1-搭建调试环境.html"><strong aria-hidden="true">7.1.</strong> 开发环境</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx2-基础架构.html"><strong aria-hidden="true">7.2.</strong> 基础架构</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx3-基础数据结构.html"><strong aria-hidden="true">7.3.</strong> 基础数据结构</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx4-内存管理.html"><strong aria-hidden="true">7.4.</strong> 内存管理</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx5-http.html"><strong aria-hidden="true">7.5.</strong> http</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx6-手写hello-handler.html"><strong aria-hidden="true">7.6.</strong> 手写handler</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="pod详解"><a class="header" href="#pod详解">pod详解</a></h2>
+<ul>
+<li>pod是容器集合,基于cgroup共享pid,ipc,network,和uts namesapce,是k8s调度的基本单位</li>
+<li>pod设计理念支持多个容器在一个pod中共享网络和文件系统,可以通过进程间通信和文件共享完成服务<br />
+下面我们来看下以下pod是怎么在k8s中被创建的，下面是粗略的流程图</li>
+</ul>
+<pre><code class="language-shell">➜  k8s git:(main) ✗ cat k8s-pod| graph-easy
+                                                   +---------+
+                                                   |   csi   |
+                                                   +---------+
+                                                     ^
+                                                     |
+                                                     |
++---------+     +-----------+     +----------+     +---------+     +-----+
+| kubectl | --&gt; | apiserver | --&gt; | schedule | --&gt; | kubelet | --&gt; | cni |
++---------+     +-----------+     +----------+     +---------+     +-----+
+                                                     |
+                                                     |
+                                                     v
+                                                   +---------+
+                                                   |   cri   |
+                                                   +---------+
+</code></pre>
+<pre><code class="language-yaml">#kubectl apply -f xx.yaml
+apiVersion: v1 
+kind: Pod
+metadata:
+  name: hello 
+spec:
+  containers:
+  - image: nginx:1.15
+  name: nginx
+</code></pre>
+<p>kubectl 执行yaml后,会通过apiserver鉴权等一系列操作,然后经过调度,此时会有controller过滤打分驱逐等等确定节点<br />
+节点上运行的kubelet会通过cri接口与containerd/docker生成拉起镜像,然后通过cni配置网络相关,通过csi配置好存储相关<br />
+下面我们一起来看看kublet具体的代码</p>
+<h3 id="kubelet启动流程"><a class="header" href="#kubelet启动流程">kubelet启动流程</a></h3>
+<p>kubelet在k8s中主要负责跟node交互,如创建pod,上报node的cpu,内存,磁盘信息等等,以及pod的网络,磁盘分配,下面我们来看看kubelet的启动流程<br />
+本机启动命令如下,分别配置了kubeconfig,config以及与cri交互通过containerd.sock,下面我们看下启动的流程,然后结合代码讲解</p>
+<pre><code class="language-shell">/usr/bin/kubelet 
+--bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf 
+--kubeconfig=/etc/kubernetes/kubelet.conf 
+--config=/var/lib/kubelet/config.yaml
+--container-runtime-endpoint=unix:///var/run/containerd/containerd.sock
+--pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.9
+</code></pre>
+<pre><code class="language-text">kubelet启动粗略流程,锁进代表进入新的函数 如func a(){b()},则描述为
+a()
+  b()
+server.go:
+    NewKubeletCommand()
+    //kubelet 启动需要的依赖项目
+    kubeletDeps, err := UnsecuredDependencies(kubeletServer, utilfeature.DefaultFeatureGate) 
+    //依赖项
+    plugins, err := ProbeVolumePlugins(featureGate)
+    run(ctx, s, kubeDeps, featureGate)
+        //初始化 KubeClient，EventClient，HeartbeatClient 以及一些配置的校验
+        ...
+        //初始化cri
+        kubeDeps.ContainerManager, err = cm.NewContainerManager(.....)
+        //pre 服务初始化
+        kubelet.PreInitRuntimeService()
+        //启动RunKubelet
+        RunKubelet(s, kubeDeps, s.RunOnce); 
+            //创建并初始化kublet
+            k, err := createAndInitKubelet(kubeServer,kubeDeps,hostname,hostnameOverridden,nodeName,nodeIPs)
+            //启动Kubelet
+            startKubelet(k, podCfg, &amp;kubeServer.KubeletConfiguration, kubeDeps, kubeServer.EnableServer)
+                go k.Run(podCfg.Updates())
+                    //start volume manager
+                    go kl.volumeManager.Run(kl.sourcesReady, wait.NeverStop)
+                    //监听file，apiserver，http
+                    kl.syncLoop(ctx, updates, kl)
+                        //handle pod event
+                        kl.syncLoopIteration(ctx, updates, handler, syncTicker.C, housekeepingTicker.C, plegCh)
+                        //下面是处理pod相关,在下文详细讲解
+</code></pre>
+<h4 id="pod"><a class="header" href="#pod">pod</a></h4>
+<p>从以下管道中接收事件</p>
+<ul>
+<li>configCh:       a channel to read config events from //static po 一般通过申明文件放在kubernetes/manifest目录下,用来创建管理组建的pod</li>
+<li>handler:        the SyncHandler to dispatch pods to </li>
+<li>syncCh:         a channel to read periodic sync events from</li>
+<li>housekeepingCh: a channel to read housekeeping events from</li>
+<li>plegCh:         a channel to read PLEG updates from
+分别对应如下方法去对pod进行操作</li>
+</ul>
+<pre><code class="language-go">// SyncHandler is an interface implemented by Kubelet, for testability
+type SyncHandler interface {
+	HandlePodAdditions(pods []*v1.Pod)
+	HandlePodUpdates(pods []*v1.Pod)
+	HandlePodRemoves(pods []*v1.Pod)
+	HandlePodReconcile(pods []*v1.Pod)
+	HandlePodSyncs(pods []*v1.Pod)
+	HandlePodCleanups(ctx context.Context) error
+}
+</code></pre>
+<p>下面我们先看HandlePodAdditions()方法的大概实现</p>
+<h5 id="pod-add"><a class="header" href="#pod-add">pod Add</a></h5>
+<pre><code class="language-go">//多余代码已经删除,仅保留主流程代码
+//pkg/kubelet/kubelet.go
+func (kl *Kubelet) HandlePodAdditions(pods []*v1.Pod) {
+	//获取这次事件的所有的pod
+	for _, pod := range pods {
+		//将pod添加到podManager,如果podManager中不存在pod,则说明被apiserver删除,即被controller删除或者调用kubectl删除
+		kl.podManager.AddPod(pod)
+		//检查该pod是否可以被调度到该node
+        if ok, reason, message := kl.canAdmitPod(activePods, pod); !ok {
+            kl.rejectPod(pod, reason, message)
+            continue
+        }
+		//在异步中执行pod同步
+		kl.dispatchWork(pod, kubetypes.SyncPodCreate, mirrorPod, start)
+	}
+}
+func (kl *Kubelet) dispatchWork(pod *v1.Pod, syncType kubetypes.SyncPodType, mirrorPod *v1.Pod, start time.Time) {
+	kl.podWorkers.UpdatePod(UpdatePodOptions{
+		Pod:        pod,
+		MirrorPod:  mirrorPod,
+		UpdateType: syncType,
+		StartTime:  start,
+	})
+	if syncType == kubetypes.SyncPodCreate {
+		metrics.ContainersPerPodCount.Observe(float64(len(pod.Spec.Containers)))
+	}
+}
+</code></pre>
+<pre><code class="language-go">//pkg/kubelet/pod_workers.go
+func (p *podWorkers) UpdatePod(options UpdatePodOptions) {
+	//省略了一些对状态的判断,如被删除了,提前中止
+    go func() {
+        p.podWorkerLoop(uid, outCh)
+    }()
+}
+}
+func (p *podWorkers) podWorkerLoop(podUID types.UID, podUpdates &lt;-chan struct{}) {
+    isTerminal, err = p.podSyncer.SyncPod(ctx, update.Options.UpdateType, update.Options.Pod, update.Options.MirrorPod, status)
+}
+func (kl *Kubelet) SyncPod(_ context.Context, updateType kubetypes.SyncPodType, pod, mirrorPod *v1.Pod, podStatus *kubecontainer.PodStatus) (isTerminal bool, err error) {
+    // check soft admin, pod will be pending if check fails
+	runnable := kl.canRunPod(pod)
+	//检查网络插件
+	if err := kl.runtimeState.networkErrors(); err != nil &amp;&amp; !kubecontainer.IsHostNetworkPod(pod) {}
+    // Call the container runtime's SyncPod callback
+    result := kl.containerRuntime.SyncPod(ctx, pod, podStatus, pullSecrets, kl.backOff)
+}
+//pkg/kubelet/kuberuntime/kuberuntime_manager.go
+func (m *kubeGenericRuntimeManager) SyncPod(ctx context.Context, pod *v1.Pod, podStatus *kubecontainer.PodStatus, pullSecrets []v1.Secret, backOff *flowcontrol.Backoff) (result kubecontainer.PodSyncResult) {
+    //检查创建sandbox规范
+	podContainerChanges := m.computePodActions(ctx, pod, podStatus)
+	//创建pod,函数见下文
+    podSandboxID, msg, err = m.createPodSandbox(ctx, pod, podContainerChanges.Attempt)
+	
+	//启动初始化容器
+    start(ctx, &quot;init container&quot;, metrics.InitContainer, containerStartSpec(container));
+	//启动容器
+    for _, idx := range podContainerChanges.ContainersToStart {
+        start(ctx, &quot;container&quot;, metrics.Container, containerStartSpec(&amp;pod.Spec.Containers[idx]))
+    }
+}
+//
+</code></pre>
+<pre><code class="language-go">//pkg/kubelet/kuberuntime/kuberuntime_sandbox.go
+func (m *kubeGenericRuntimeManager) createPodSandbox(ctx context.Context, pod *v1.Pod, attempt uint32) (string, string, error) {
+    // 创建pd日志目录
+    err = m.osInterface.MkdirAll(podSandboxConfig.LogDirectory, 0755)
+    //与cri交互
+    podSandBoxID, err := m.runtimeService.RunPodSandbox(ctx, podSandboxConfig, runtimeHandler)
+	//最终调用 c.cc.Invoke(ctx, &quot;/runtime.v1.RuntimeService/RunPodSandbox&quot;, in, out, opts...)
+	//k8s.io/cri-api/pkg/apis/runtime/v1/api.pb.go
+}
+</code></pre>
+<pre><code class="language-go">func (m *kubeGenericRuntimeManager) startContainer(ctx context.Context, podSandboxID string, podSandboxConfig *runtimeapi.PodSandboxConfig, spec *startSpec, pod *v1.Pod, podStatus *kubecontainer.PodStatus, pullSecrets []v1.Secret, podIP string, podIPs []string) (string, error) {
+    //拉取镜像
+	m.imagePuller.EnsureImageExists(ctx, pod, container, pullSecrets, podSandboxConfig)
+	//创建容器
+	//c.cc.Invoke(ctx, &quot;/runtime.v1.RuntimeService/CreateContainer&quot;, in, out, opts...)
+    m.runtimeService.CreateContainer(ctx, podSandboxID, containerConfig, podSandboxConfig)
+	
+	//设置cpu set
+    m.internalLifecycle.PreStartContainer(pod, container, containerID)
+	//cri启动容器
+	//k8s.io/cri-api/pkg/apis/runtime/v1/api.pb.go
+	//c.cc.Invoke(ctx, &quot;/runtime.v1.RuntimeService/StartContainer&quot;, in, out, opts...)
+    m.runtimeService.StartContainer(ctx, containerID)
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../k8s/base/docker详解.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../k8s/base/k8s-schedule详解.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../k8s/base/docker详解.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../k8s/base/k8s-schedule详解.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

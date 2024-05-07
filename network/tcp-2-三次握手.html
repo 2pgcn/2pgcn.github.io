@@ -1,0 +1,399 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>tcp三次握手</title>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-NBTSW2TH');</script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-N6K15VE892"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-N6K15VE892');
+        </script>
+        <!-- End Google Tag Manager -->
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NBTSW2TH"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> 最近更新</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.</strong> golang</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.1.</strong> golang基础数据结构</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../go/base/1.channel详解.html"><strong aria-hidden="true">2.1.1.</strong> channel</a></li><li class="chapter-item "><a href="../go/base/2.time详解.html"><strong aria-hidden="true">2.1.2.</strong> time</a></li><li class="chapter-item "><a href="../go/base/3.select详解.html"><strong aria-hidden="true">2.1.3.</strong> select</a></li><li class="chapter-item "><a href="../go/base/4.sync上.html"><strong aria-hidden="true">2.1.4.</strong> sync上</a></li><li class="chapter-item "><a href="../go/base/5.sync下.html"><strong aria-hidden="true">2.1.5.</strong> sync下</a></li><li class="chapter-item "><a href="../go/base/6.map详解.html"><strong aria-hidden="true">2.1.6.</strong> map</a></li><li class="chapter-item "><a href="../go/base/7.slice详解.html"><strong aria-hidden="true">2.1.7.</strong> slice</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> golang runtime源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../go/runtime/1.golang源码阅读-go-start.html"><strong aria-hidden="true">2.2.1.</strong> go启动流程</a></li><li class="chapter-item "><a href="../go/runtime/2.golang源码阅读-schedule1.html"><strong aria-hidden="true">2.2.2.</strong> schedule上</a></li><li class="chapter-item "><a href="../go/runtime/3.golang源码阅读-schedule2.html"><strong aria-hidden="true">2.2.3.</strong> schedule下</a></li><li class="chapter-item "><a href="../go/runtime/4.golang源码阅读-sysmon详解.html"><strong aria-hidden="true">2.2.4.</strong> sysmon详解</a></li><li class="chapter-item "><a href="../go/runtime/5.golang源码阅读-内存分配.html"><strong aria-hidden="true">2.2.5.</strong> 内存分配</a></li><li class="chapter-item "><a href="../go/runtime/6.golang源码阅读-netpoll详解.html"><strong aria-hidden="true">2.2.6.</strong> netpoll详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.3.</strong> golang杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.3.1.</strong> 长连接无损迁移</div></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> 队列</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">3.1.</strong> kafka</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 云原生</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.1.</strong> 前置知识</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../k8s/base/k8s核心对象.html"><strong aria-hidden="true">4.1.1.</strong> k8s核心对象</a></li><li class="chapter-item "><a href="../k8s/base/docker详解.html"><strong aria-hidden="true">4.1.2.</strong> docker原理</a></li><li class="chapter-item "><a href="../k8s/base/pod详解.html"><strong aria-hidden="true">4.1.3.</strong> pod详解</a></li><li class="chapter-item "><a href="../k8s/base/k8s-schedule详解.html"><strong aria-hidden="true">4.1.4.</strong> schedule</a></li><li class="chapter-item "><a href="../k8s/base/apiserver访问控制.html"><strong aria-hidden="true">4.1.5.</strong> apiserver访问控制</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.2.</strong> 网关</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.2.1.</strong> traefik</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../gateway/traefik/1.traefik基础概念.html"><strong aria-hidden="true">4.2.1.1.</strong> traefik基础概念</a></li><li class="chapter-item "><a href="../gateway/traefik/4.traefik启动流程源码分析.html"><strong aria-hidden="true">4.2.1.2.</strong> traefik启动流程</a></li><li class="chapter-item "><a href="../gateway/traefik/5.traefik-EntryPoints详解上.html"><strong aria-hidden="true">4.2.1.3.</strong> traefik-EntryPoints详解</a></li><li class="chapter-item "><a href="../gateway/traefik/6.traefik-router详解.html"><strong aria-hidden="true">4.2.1.4.</strong> traefik-router详解</a></li><li class="chapter-item "><a href="../gateway/traefik/7.traefik-services详解.html"><strong aria-hidden="true">4.2.1.5.</strong> traefik-services详解</a></li><li class="chapter-item "><a href="../gateway/traefik/8.traefik-provider详解.html"><strong aria-hidden="true">4.2.1.6.</strong> traefik-provider详解</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.3.</strong> serviceMesh</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.4.</strong> k8s控制器源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../k8s/controller/replicaset详解.html"><strong aria-hidden="true">4.4.1.</strong> replicaset详解</a></li><li class="chapter-item "><a href="../k8s/controller/deploy详解.html"><strong aria-hidden="true">4.4.2.</strong> deploy详解</a></li><li class="chapter-item "><a href="../k8s/controller/endpoint详解.html"><strong aria-hidden="true">4.4.3.</strong> endpoint详解</a></li><li class="chapter-item "><a href="../k8s/controller/services详解.html"><strong aria-hidden="true">4.4.4.</strong> services详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.5.</strong> k8s cni源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../k8s/cni/cni详解.html"><strong aria-hidden="true">4.5.1.</strong> cni基础</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.6.</strong> k8s cri源码分析</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 网络</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../network/tcp-1-环境.html"><strong aria-hidden="true">5.1.</strong> 环境</a></li><li class="chapter-item "><a href="../network/icmp.html"><strong aria-hidden="true">5.2.</strong> icmp协议</a></li><li class="chapter-item expanded "><a href="../network/tcp-2-三次握手.html" class="active"><strong aria-hidden="true">5.3.</strong> tcp三次握手</a></li><li class="chapter-item "><a href="../network/tcp压测客户端.html"><strong aria-hidden="true">5.4.</strong> tcp压测</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../other/linux1-ssh连接失败.html"><strong aria-hidden="true">6.1.</strong> ssh连接失败</a></li><li class="chapter-item "><a href="../other/freeswitch_install.html"><strong aria-hidden="true">6.2.</strong> freeswitch安装</a></li><li class="chapter-item "><a href="../other/freeswitch搭建呼叫中心-1方案设计.html"><strong aria-hidden="true">6.3.</strong> 呼叫中心设计</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> nginx</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../gateway/nginx/nginx1-搭建调试环境.html"><strong aria-hidden="true">7.1.</strong> 开发环境</a></li><li class="chapter-item "><a href="../gateway/nginx/nginx2-基础架构.html"><strong aria-hidden="true">7.2.</strong> 基础架构</a></li><li class="chapter-item "><a href="../gateway/nginx/nginx3-基础数据结构.html"><strong aria-hidden="true">7.3.</strong> 基础数据结构</a></li><li class="chapter-item "><a href="../gateway/nginx/nginx4-内存管理.html"><strong aria-hidden="true">7.4.</strong> 内存管理</a></li><li class="chapter-item "><a href="../gateway/nginx/nginx5-http.html"><strong aria-hidden="true">7.5.</strong> http</a></li><li class="chapter-item "><a href="../gateway/nginx/nginx6-手写hello-handler.html"><strong aria-hidden="true">7.6.</strong> 手写handler</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h3 id="tcp三次握手流程简介"><a class="header" href="#tcp三次握手流程简介">tcp三次握手流程简介</a></h3>
+<p>数据具体流程如下图<br />
+服务端调用listen函数变为LISTEN状态，客户端调用connect()函数向服务端发起SYN包<br />
+服务器接收到请求后,此时服务端变为SYN_RCVD状态,同时会把把该连接放入半连接队列里会,后回一个ACK,SYN包<br />
+客户端接收到SYN包后,会发送一个ACK包,服务器接收到ACK包后,连接建立成功,同时移如accept连接队列.</p>
+<p>补充:建立半连接队列时syn攻击 解决:(net.ipv4.tcp_syncookies = 1)，opt很多字段会被占用
+syn队列满了不放半连接队列直接返回给客户端,客户端处理完发回cookies服务端解析tcp_syncookies后放accept队列</p>
+<!--more-->
+<pre><code class="language-shell">net.ipv4.tcp_syn_retries=6 #(三次握手重传次数) //后续实现
+net.ipv4.tcp_synack_retries=6 #(三次握手重回次数) //后续实现
+#半连接队列配置
+syn半连接队列
+net.ipv4.tcp max_syn_backlog = 1024
+#全连接队列
+accept队列
+net.core.somaxconn = 1024 #操作系统最大
+listent(fd,backlog)  #if(backlog&lt;=net.core.somaxconn) backlog生效
+net.ipv4.tcp_abort_on_overflow = 0 #作用于全连接队列 1满了后 回rst  0则不处理 客户端收不到ack重发syn
+</code></pre>
+<p><img src="https://blog-1252539675.cos.ap-hongkong.myqcloud.com/tcp/tcpip-3-tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B/tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B1.png" alt="tcp三次握手1.png" /></p>
+<p>###tcp具体包结构以及状态机
+从<a href="https://datatracker.ietf.org/doc/html/rfc793">rfc793</a> 拷贝</p>
+<pre><code class="language-shell">#tcp包结构定义
+0                   1                   2                   3
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          Source Port          |       Destination Port        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                        Sequence Number                        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                    Acknowledgment Number                      |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  Data |           |U|A|P|R|S|F|                               |
+| Offset| Reserved  |R|C|S|S|Y|I|            Window             |
+|       |           |G|K|H|T|N|N|                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|           Checksum            |         Urgent Pointer        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                    Options                    |    Padding    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                             data                              |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+#完整状态机定义如下
+        +---------+ ---------\      active OPEN
+                              |  CLOSED |            \    -----------
+                              +---------+&lt;---------\   \   create TCB
+                                |     ^              \   \  snd SYN
+                   passive OPEN |     |   CLOSE        \   \
+                   ------------ |     | ----------       \   \
+                    create TCB  |     | delete TCB         \   \
+                                V     |                      \   \
+                              +---------+            CLOSE    |    \
+                              |  LISTEN |          ---------- |     |
+                              +---------+          delete TCB |     |
+                   rcv SYN      |     |     SEND              |     |
+                  -----------   |     |    -------            |     V
+ +---------+      snd SYN,ACK  /       \   snd SYN          +---------+
+ |         |&lt;-----------------           ------------------&gt;|         |
+ |   SYN   |                    rcv SYN                     |   SYN   |
+ |   RCVD  |&lt;-----------------------------------------------|   SENT  |
+ |         |                    snd ACK                     |         |
+ |         |------------------           -------------------|         |
+ +---------+   rcv ACK of SYN  \       /  rcv SYN,ACK       +---------+
+   |           --------------   |     |   -----------
+   |                  x         |     |     snd ACK
+   |                            V     V
+   |  CLOSE                   +---------+
+   | -------                  |  ESTAB  |
+   | snd FIN                  +---------+
+   |                   CLOSE    |     |    rcv FIN
+   V                  -------   |     |    -------
+ +---------+          snd FIN  /       \   snd ACK          +---------+
+ |  FIN    |&lt;-----------------           ------------------&gt;|  CLOSE  |
+ | WAIT-1  |------------------                              |   WAIT  |
+ +---------+          rcv FIN  \                            +---------+
+   | rcv ACK of FIN   -------   |                            CLOSE  |
+   | --------------   snd ACK   |                           ------- |
+   V        x                   V                           snd FIN V
+ +---------+                  +---------+                   +---------+
+ |FINWAIT-2|                  | CLOSING |                   | LAST-ACK|
+ +---------+                  +---------+                   +---------+
+   |                rcv ACK of FIN |                 rcv ACK of FIN |
+   |  rcv FIN       -------------- |    Timeout=2MSL -------------- |
+   |  -------              x       V    ------------        x       V
+    \ snd ACK                 +---------+delete TCB         +---------+
+     ------------------------&gt;|TIME WAIT|------------------&gt;| CLOSED  |
+                              +---------+                   +---------+
+</code></pre>
+<p>###三次握手代码实现
+注意如果抓包出现TCP Retransmission,请仔细检查[SYN, ACK]是否正确<br />
+<a href="https://github.com/php403/gotcp/tree/v1">代码地址</a></p>
+<h4 id="具体流程"><a class="header" href="#具体流程">具体流程</a></h4>
+<p>分了两个goroutine，一个收包,一个发包
+1 判断是tcp的包后，解析完交给tcp状态机处理,状态机会根据4元组判断状态以及推动状态变更
+2 需要发包后写入ring buf,由另一个goroutine去读取发包
+3 进入状态机后,若第一次连接则建立一个新的状态机,否则根据之前代码的状态机结构进行状态变更
+4 变更完状态后,根据是否需要发送包给客户端,放入写ring buf,由另一个goroutine去读取发包</p>
+<pre><code class="language-go">//判断是tcp协议后 进入状态机
+case layers.IPProtocolTCP:
+        tcpLayers, ok := gopacket.NewPacket(ip4.LayerPayload(), layers.LayerTypeTCP, gopacket.Default).Layer(layers.LayerTypeTCP).(*layers.TCP)
+        if !ok {
+            continue
+        }
+        log.Default().Printf(&quot;tcp ack:%v,syn:%v\n&quot;, tcpLayers.Ack, tcpLayers.SYN)
+        err = tcp.StateMachine(ctx, ip4.SrcIP, ip4.DstIP, tcpLayers)
+        if err != nil {
+            log.Default().Printf(&quot;tcp2 StateMachine err:%v&quot;, err)
+        }
+    }
+</code></pre>
+<pre><code class="language-go">//tcp状态定义
+const (
+	GO_TCP_STATUS_CLOSED TcpStatus = iota
+	GO_TCP_STATUS_LISTEN
+	GO_TCP_STATUS_SYN_RCVD
+	GO_TCP_STATUS_SYN_SENT
+	GO_TCP_STATUS_ESTABLISHED
+	GO_TCP_STATUS_FIN_WAIT_1
+	GO_TCP_STATUS_FIN_WAIT_2
+	GO_TCP_STATUS_CLOSING
+	GO_TCP_STATUS_TIME_WAIT
+	GO_TCP_STATUS_CLOSE_WAIT
+	GO_TCP_STATUS_LAST_ACK
+)
+//状态机对应结构
+type Tcb struct {
+	//todo fd 改成io.Reader
+	fd               int
+	SrcIP, DstIP     net.IP
+	SrcPort, DstPort layers.TCPPort
+	tcpStatus        TcpStatus
+	SendBuf, RecBuf  *container.Ring
+	Next, Prev       *Tcb
+	Seq, Ack         uint32
+}
+//状态及链表存储
+type tcbTable struct {
+	tcbHead *Tcb
+	count   int
+}
+</code></pre>
+<p>具体测试步骤(目前由于只有一个连接,暂未解决race,后续解决)</p>
+<pre><code class="language-shell">#窗口1
+nc 192.168.2.1 8004
+#窗口2
+sudo tshark -i tun0 -f &quot;tcp&quot; 
+Running as user &quot;root&quot; and group &quot;root&quot;. This could be dangerous.
+Capturing on 'tun0'
+    1 0.000000000  192.168.2.0 → 192.168.2.1  TCP 60 47080 → 8004 [SYN] Seq=0 Win=64416 Len=0 MSS=1464 SACK_PERM=1 TSval=3612825133 TSecr=0 WS=128
+    2 0.002529910  192.168.2.1 → 192.168.2.0  TCP 40 8004 → 47080 [SYN, ACK] Seq=0 Ack=1 Win=1504 Len=0
+    3 0.002562878  192.168.2.0 → 192.168.2.1  TCP 40 47080 → 8004 [ACK] Seq=1 Ack=1 Win=64416 Len=0
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../network/icmp.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../network/tcp压测客户端.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../network/icmp.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../network/tcp压测客户端.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

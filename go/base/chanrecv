@@ -1,0 +1,7 @@
+[channelrecv]- chan is nil -> [gopark forever]
+[channelrecv]- chan not nil -> [block?] - not block && not recv -> [lock]
+[block?] - block -> [lock]
+[lock] --> [chan close?] - close && qcount=0 -> [return]
+[chan close?] --> [not close] - sendq.dequeue() -> [recv]
+[not close]- buf不为空 -> [copy value]
+[not close]- buf为空 ->  [pack sudog && enqueue] -> [go park && schedule]

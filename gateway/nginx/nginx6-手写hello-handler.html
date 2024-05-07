@@ -1,0 +1,409 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>手写handler</title>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-NBTSW2TH');</script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-N6K15VE892"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-N6K15VE892');
+        </script>
+        <!-- End Google Tag Manager -->
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NBTSW2TH"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../index.html"><strong aria-hidden="true">1.</strong> 最近更新</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.</strong> golang</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.1.</strong> golang基础数据结构</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../go/base/1.channel详解.html"><strong aria-hidden="true">2.1.1.</strong> channel</a></li><li class="chapter-item "><a href="../../go/base/2.time详解.html"><strong aria-hidden="true">2.1.2.</strong> time</a></li><li class="chapter-item "><a href="../../go/base/3.select详解.html"><strong aria-hidden="true">2.1.3.</strong> select</a></li><li class="chapter-item "><a href="../../go/base/4.sync上.html"><strong aria-hidden="true">2.1.4.</strong> sync上</a></li><li class="chapter-item "><a href="../../go/base/5.sync下.html"><strong aria-hidden="true">2.1.5.</strong> sync下</a></li><li class="chapter-item "><a href="../../go/base/6.map详解.html"><strong aria-hidden="true">2.1.6.</strong> map</a></li><li class="chapter-item "><a href="../../go/base/7.slice详解.html"><strong aria-hidden="true">2.1.7.</strong> slice</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> golang runtime源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../go/runtime/1.golang源码阅读-go-start.html"><strong aria-hidden="true">2.2.1.</strong> go启动流程</a></li><li class="chapter-item "><a href="../../go/runtime/2.golang源码阅读-schedule1.html"><strong aria-hidden="true">2.2.2.</strong> schedule上</a></li><li class="chapter-item "><a href="../../go/runtime/3.golang源码阅读-schedule2.html"><strong aria-hidden="true">2.2.3.</strong> schedule下</a></li><li class="chapter-item "><a href="../../go/runtime/4.golang源码阅读-sysmon详解.html"><strong aria-hidden="true">2.2.4.</strong> sysmon详解</a></li><li class="chapter-item "><a href="../../go/runtime/5.golang源码阅读-内存分配.html"><strong aria-hidden="true">2.2.5.</strong> 内存分配</a></li><li class="chapter-item "><a href="../../go/runtime/6.golang源码阅读-netpoll详解.html"><strong aria-hidden="true">2.2.6.</strong> netpoll详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.3.</strong> golang杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.3.1.</strong> 长连接无损迁移</div></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> 队列</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">3.1.</strong> kafka</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 云原生</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.1.</strong> 前置知识</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/base/k8s核心对象.html"><strong aria-hidden="true">4.1.1.</strong> k8s核心对象</a></li><li class="chapter-item "><a href="../../k8s/base/docker详解.html"><strong aria-hidden="true">4.1.2.</strong> docker原理</a></li><li class="chapter-item "><a href="../../k8s/base/pod详解.html"><strong aria-hidden="true">4.1.3.</strong> pod详解</a></li><li class="chapter-item "><a href="../../k8s/base/k8s-schedule详解.html"><strong aria-hidden="true">4.1.4.</strong> schedule</a></li><li class="chapter-item "><a href="../../k8s/base/apiserver访问控制.html"><strong aria-hidden="true">4.1.5.</strong> apiserver访问控制</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.2.</strong> 网关</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.2.1.</strong> traefik</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/traefik/1.traefik基础概念.html"><strong aria-hidden="true">4.2.1.1.</strong> traefik基础概念</a></li><li class="chapter-item "><a href="../../gateway/traefik/4.traefik启动流程源码分析.html"><strong aria-hidden="true">4.2.1.2.</strong> traefik启动流程</a></li><li class="chapter-item "><a href="../../gateway/traefik/5.traefik-EntryPoints详解上.html"><strong aria-hidden="true">4.2.1.3.</strong> traefik-EntryPoints详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/6.traefik-router详解.html"><strong aria-hidden="true">4.2.1.4.</strong> traefik-router详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/7.traefik-services详解.html"><strong aria-hidden="true">4.2.1.5.</strong> traefik-services详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/8.traefik-provider详解.html"><strong aria-hidden="true">4.2.1.6.</strong> traefik-provider详解</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.3.</strong> serviceMesh</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.4.</strong> k8s控制器源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/controller/replicaset详解.html"><strong aria-hidden="true">4.4.1.</strong> replicaset详解</a></li><li class="chapter-item "><a href="../../k8s/controller/deploy详解.html"><strong aria-hidden="true">4.4.2.</strong> deploy详解</a></li><li class="chapter-item "><a href="../../k8s/controller/endpoint详解.html"><strong aria-hidden="true">4.4.3.</strong> endpoint详解</a></li><li class="chapter-item "><a href="../../k8s/controller/services详解.html"><strong aria-hidden="true">4.4.4.</strong> services详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.5.</strong> k8s cni源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/cni/cni详解.html"><strong aria-hidden="true">4.5.1.</strong> cni基础</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.6.</strong> k8s cri源码分析</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 网络</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../network/tcp-1-环境.html"><strong aria-hidden="true">5.1.</strong> 环境</a></li><li class="chapter-item "><a href="../../network/icmp.html"><strong aria-hidden="true">5.2.</strong> icmp协议</a></li><li class="chapter-item "><a href="../../network/tcp-2-三次握手.html"><strong aria-hidden="true">5.3.</strong> tcp三次握手</a></li><li class="chapter-item "><a href="../../network/tcp压测客户端.html"><strong aria-hidden="true">5.4.</strong> tcp压测</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../other/linux1-ssh连接失败.html"><strong aria-hidden="true">6.1.</strong> ssh连接失败</a></li><li class="chapter-item "><a href="../../other/freeswitch_install.html"><strong aria-hidden="true">6.2.</strong> freeswitch安装</a></li><li class="chapter-item "><a href="../../other/freeswitch搭建呼叫中心-1方案设计.html"><strong aria-hidden="true">6.3.</strong> 呼叫中心设计</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> nginx</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/nginx/nginx1-搭建调试环境.html"><strong aria-hidden="true">7.1.</strong> 开发环境</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx2-基础架构.html"><strong aria-hidden="true">7.2.</strong> 基础架构</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx3-基础数据结构.html"><strong aria-hidden="true">7.3.</strong> 基础数据结构</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx4-内存管理.html"><strong aria-hidden="true">7.4.</strong> 内存管理</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx5-http.html"><strong aria-hidden="true">7.5.</strong> http</a></li><li class="chapter-item expanded "><a href="../../gateway/nginx/nginx6-手写hello-handler.html" class="active"><strong aria-hidden="true">7.6.</strong> 手写handler</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p>本文将实现一个hello-handler,即访问访问nginx location /pg/hello,我们hello module会读取配置文件,以及输出数据返回给客户端</p>
+<h2 id="nginxconf-配置"><a class="header" href="#nginxconf-配置">nginx.conf 配置</a></h2>
+<pre><code class="language-c">// nginx.conf server增加如下配置
+ location /pg/hello {
+            hello;
+        }
+</code></pre>
+<h2 id="config文件"><a class="header" href="#config文件">config文件</a></h2>
+<p>在nginx中,我们要编写自己的module,需要增加对应的config,执行./configure的时候会将我们的模块添加到nginx中</p>
+<pre><code class="language-c">```shell
+#文件路径 nginx/pg_module/ngx_http_hello_module/config
+ngx_addon_name=ngx_http_hello_module
+HTTP_MODULES=&quot;$HTTP_MODULES ngx_http_hello_module&quot;
+NGX_ADDON_SRCS=&quot;$NGX_ADDON_SRCS $ngx_addon_dir/ngx_http_hello_module.c&quot;
+</code></pre>
+<!--more-->
+<h2 id="handler编写步骤"><a class="header" href="#handler编写步骤">handler编写步骤</a></h2>
+<ol>
+<li>编写模块基本结构。包括模块的定义，模块上下文结构，模块的配置结构等</li>
+<li>实现 handler 的挂载函数。根据模块的需求选择正确的挂载方式。</li>
+<li>编写 handler 处理函数。模块的功能主要通过这个函数来完成。
+下面对照代码注释</li>
+</ol>
+<pre><code class="language-c">#include &lt;ngx_http.h&gt;
+#include &lt;ngx_config.h&gt;
+#include &lt;ngx_core.h&gt;
+
+typedef struct
+{
+    ngx_slab_pool_t *shpool; //共享内存,用于统计   
+} ngx_http_hello_conf_t;
+
+static void  *ngx_http_hello_create_location_conf(ngx_conf_t *cf);
+static char *ngx_http_hello_set(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
+//ngx_string(&quot;hello_buf&quot;), 对应参数名称
+//NGX_CONF_TAKE1 对应conf参数个数
+static ngx_command_t hello_commands[] = {
+	{
+		ngx_string(&quot;hello&quot;),
+		NGX_HTTP_LOC_CONF | NGX_CONF_NOARGS,
+		ngx_http_hello_set,
+		NGX_HTTP_LOC_CONF_OFFSET,
+		0, NULL
+	},
+	ngx_null_command
+};
+
+static ngx_http_module_t hello_ctx = {
+	NULL,                               //preconfiguration
+	NULL,                               //postconfiguration
+	
+	NULL,                               //create main configuration
+	NULL,                               //init main configuration
+
+	NULL,                               //create server configuration
+	NULL,                               //merge server configuration
+
+	ngx_http_hello_create_location_conf, //create location configuration
+	NULL,                               //merge location configuration
+};
+
+ngx_module_t ngx_http_hello_module = {
+	NGX_MODULE_V1,      //version
+	&amp;hello_ctx,         //module context
+	hello_commands,     //module directives
+	NGX_HTTP_MODULE,    //module type
+	NULL,               //init master
+	NULL,               //init module
+	NULL,               //init process
+	NULL,               //init thread
+	NULL,               //exit thread
+	NULL,                //exit process
+	NULL,               //exit master
+	NGX_MODULE_V1_PADDING
+};
+
+char *ngx_http_hello_set(ngx_conf_t *cf, ngx_command_t *cmd, void *conf) {
+    ngx_log_error(NGX_LOG_EMERG, cf-&gt;log, ngx_errno, &quot;ngx_http_hello_set&quot;);
+    return NGX_CONF_OK;
+}
+
+
+void  *ngx_http_hello_create_location_conf(ngx_conf_t *cf) {
+	ngx_http_hello_conf_t *conf;
+    conf = ngx_palloc(cf-&gt;pool, sizeof(ngx_http_hello_conf_t));
+	ngx_log_error(NGX_LOG_EMERG, cf-&gt;log, ngx_errno, &quot;ngx_http_hello_create_location_conf&quot;);
+	return conf;
+}
+
+</code></pre>
+<h2 id="测试基础框架"><a class="header" href="#测试基础框架">测试基础框架</a></h2>
+<p>执行如下命令后，出现打印后,我们基础module已经正常加载到nginx里了,接下来我们去赋值conf函数以及输出http内容到客户端</p>
+<pre><code class="language-shell">#!bin/bash
+/root/work/c/nginx/configure  --prefix=/root/work/c/nginx/install  --with-http_addition_module  --with-debug --add-module=/root/work/c/nginx/pg_module/ngx_http_hello_module
+
+#输出如下
+#。。。
+#adding module in /root/work/c/nginx/pg_module/ngx_http_hello_module
+ #+ ngx_http_hello_module was configured
+#。。。
+make -j 2
+make install
+
+root@VM-4-11-debian:~/work/c/nginx# ./install/sbin/nginx -c conf/nginx.conf
+nginx: [emerg] ngx_http_hello_create_location_conf
+nginx: [emerg] ngx_http_hello_create_location_conf
+nginx: [emerg] ngx_http_hello_create_location_conf
+nginx: [emerg] ngx_http_hello_create_location_conf
+nginx: [emerg] ngx_http_hello_set
+nginx: [emerg] ngx_http_hello_create_location_conf
+</code></pre>
+<h2 id="添加handler处理"><a class="header" href="#添加handler处理">添加handler处理</a></h2>
+<p>添加下面函数后,make,make install后启动,
+访问http://localhost:8080/pg/hello  ,可看到日志,代表我们handler已经正常运行了</p>
+<pre><code class="language-shell">```c 
+char *ngx_http_hello_set(ngx_conf_t *cf, ngx_command_t *cmd, void *conf) {
+    ngx_log_error(NGX_LOG_EMERG, cf-&gt;log, ngx_errno, &quot;ngx_http_hello_buf_set&quot;);
+	ngx_http_core_loc_conf_t *corecf;
+	corecf = ngx_http_conf_get_module_loc_conf(cf, ngx_http_core_module);
+	//新增处理函数,也可设置11个阶段中7个的任何一个
+	corecf-&gt;handler = ngx_http_hello_handler;
+    return NGX_CONF_OK;
+}
+
+static ngx_int_t ngx_http_hello_handler(ngx_http_request_t *r);
+static ngx_int_t ngx_http_hello_handler(ngx_http_request_t *r) {
+	ngx_log_error(NGX_LOG_EMERG, r-&gt;pool-&gt;log, ngx_errno, &quot;ngx_http_hello_handler&quot;);
+	ngx_buf_t *b = ngx_pcalloc(r-&gt;pool,  sizeof(ngx_buf_t));
+	ngx_chain_t out;
+	out.buf = b;
+	out.next = NULL;
+	return ngx_http_output_filter(r, &amp;out);
+}
+make -j 2 &amp; make install
+curl http://localhost:8080/pg/hello
+tail -n 1000 install/logs/error.log 
+
+#2022/05/19 01:36:36 [emerg] 2460203#0: *9 ngx_http_hello_handler (17: File exists), client: 127.0.0.1, server: localhost, request: &quot;GET /pg/hello HTTP/1.1&quot;, host: &quot;127.0.0.1:8080&quot;
+</code></pre>
+<h2 id="添加输出到客户端"><a class="header" href="#添加输出到客户端">添加输出到客户端</a></h2>
+<p>修改ngx_http_hello_handler函数后，访问对应url输出hello:ip</p>
+<pre><code class="language-c">//添加头文件
+#include &lt;arpa/inet.h&gt;
+
+ static ngx_int_t ngx_http_hello_handler(ngx_http_request_t *r) {
+	ngx_log_error(NGX_LOG_EMERG, r-&gt;pool-&gt;log, ngx_errno, &quot;ngx_http_hello_handler&quot;);
+	u_char html[1024] = {0};
+
+    //需要客户端真实ip需要开启realip模块
+	struct sockaddr_in *cli_ip = (struct sockaddr_in*)r-&gt;connection-&gt;sockaddr;
+	strcat((char*)html, &quot;hello:&quot;);
+	strcat((char*)html,(char*)inet_ntoa((struct in_addr)cli_ip-&gt;sin_addr));
+	int len = sizeof(html);
+
+	r-&gt;headers_out.status = 200;
+	ngx_str_set(&amp;r-&gt;headers_out.content_type, &quot;text/html&quot;);
+	ngx_http_send_header(r);
+
+	ngx_buf_t *b = ngx_pcalloc(r-&gt;pool,  sizeof(ngx_buf_t));
+	ngx_chain_t out;
+	out.buf = b;
+	out.next = NULL;
+	b-&gt;pos = html;
+	b-&gt;last = html+len;
+	b-&gt;memory = 1;
+	b-&gt;last_buf = 1;
+	return ngx_http_output_filter(r, &amp;out);
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../gateway/nginx/nginx5-http.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../gateway/nginx/nginx5-http.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>go启动流程</title>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-NBTSW2TH');</script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-N6K15VE892"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-N6K15VE892');
+        </script>
+        <!-- End Google Tag Manager -->
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NBTSW2TH"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../index.html"><strong aria-hidden="true">1.</strong> 最近更新</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.</strong> golang</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.1.</strong> golang基础数据结构</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../go/base/1.channel详解.html"><strong aria-hidden="true">2.1.1.</strong> channel</a></li><li class="chapter-item "><a href="../../go/base/2.time详解.html"><strong aria-hidden="true">2.1.2.</strong> time</a></li><li class="chapter-item "><a href="../../go/base/3.select详解.html"><strong aria-hidden="true">2.1.3.</strong> select</a></li><li class="chapter-item "><a href="../../go/base/4.sync上.html"><strong aria-hidden="true">2.1.4.</strong> sync上</a></li><li class="chapter-item "><a href="../../go/base/5.sync下.html"><strong aria-hidden="true">2.1.5.</strong> sync下</a></li><li class="chapter-item "><a href="../../go/base/6.map详解.html"><strong aria-hidden="true">2.1.6.</strong> map</a></li><li class="chapter-item "><a href="../../go/base/7.slice详解.html"><strong aria-hidden="true">2.1.7.</strong> slice</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.2.</strong> golang runtime源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../go/runtime/1.golang源码阅读-go-start.html" class="active"><strong aria-hidden="true">2.2.1.</strong> go启动流程</a></li><li class="chapter-item "><a href="../../go/runtime/2.golang源码阅读-schedule1.html"><strong aria-hidden="true">2.2.2.</strong> schedule上</a></li><li class="chapter-item "><a href="../../go/runtime/3.golang源码阅读-schedule2.html"><strong aria-hidden="true">2.2.3.</strong> schedule下</a></li><li class="chapter-item "><a href="../../go/runtime/4.golang源码阅读-sysmon详解.html"><strong aria-hidden="true">2.2.4.</strong> sysmon详解</a></li><li class="chapter-item "><a href="../../go/runtime/5.golang源码阅读-内存分配.html"><strong aria-hidden="true">2.2.5.</strong> 内存分配</a></li><li class="chapter-item "><a href="../../go/runtime/6.golang源码阅读-netpoll详解.html"><strong aria-hidden="true">2.2.6.</strong> netpoll详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.3.</strong> golang杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.3.1.</strong> 长连接无损迁移</div></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> 队列</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">3.1.</strong> kafka</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 云原生</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.1.</strong> 前置知识</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/base/k8s核心对象.html"><strong aria-hidden="true">4.1.1.</strong> k8s核心对象</a></li><li class="chapter-item "><a href="../../k8s/base/docker详解.html"><strong aria-hidden="true">4.1.2.</strong> docker原理</a></li><li class="chapter-item "><a href="../../k8s/base/pod详解.html"><strong aria-hidden="true">4.1.3.</strong> pod详解</a></li><li class="chapter-item "><a href="../../k8s/base/k8s-schedule详解.html"><strong aria-hidden="true">4.1.4.</strong> schedule</a></li><li class="chapter-item "><a href="../../k8s/base/apiserver访问控制.html"><strong aria-hidden="true">4.1.5.</strong> apiserver访问控制</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.2.</strong> 网关</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.2.1.</strong> traefik</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/traefik/1.traefik基础概念.html"><strong aria-hidden="true">4.2.1.1.</strong> traefik基础概念</a></li><li class="chapter-item "><a href="../../gateway/traefik/4.traefik启动流程源码分析.html"><strong aria-hidden="true">4.2.1.2.</strong> traefik启动流程</a></li><li class="chapter-item "><a href="../../gateway/traefik/5.traefik-EntryPoints详解上.html"><strong aria-hidden="true">4.2.1.3.</strong> traefik-EntryPoints详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/6.traefik-router详解.html"><strong aria-hidden="true">4.2.1.4.</strong> traefik-router详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/7.traefik-services详解.html"><strong aria-hidden="true">4.2.1.5.</strong> traefik-services详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/8.traefik-provider详解.html"><strong aria-hidden="true">4.2.1.6.</strong> traefik-provider详解</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.3.</strong> serviceMesh</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.4.</strong> k8s控制器源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/controller/replicaset详解.html"><strong aria-hidden="true">4.4.1.</strong> replicaset详解</a></li><li class="chapter-item "><a href="../../k8s/controller/deploy详解.html"><strong aria-hidden="true">4.4.2.</strong> deploy详解</a></li><li class="chapter-item "><a href="../../k8s/controller/endpoint详解.html"><strong aria-hidden="true">4.4.3.</strong> endpoint详解</a></li><li class="chapter-item "><a href="../../k8s/controller/services详解.html"><strong aria-hidden="true">4.4.4.</strong> services详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.5.</strong> k8s cni源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/cni/cni详解.html"><strong aria-hidden="true">4.5.1.</strong> cni基础</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.6.</strong> k8s cri源码分析</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 网络</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../network/tcp-1-环境.html"><strong aria-hidden="true">5.1.</strong> 环境</a></li><li class="chapter-item "><a href="../../network/icmp.html"><strong aria-hidden="true">5.2.</strong> icmp协议</a></li><li class="chapter-item "><a href="../../network/tcp-2-三次握手.html"><strong aria-hidden="true">5.3.</strong> tcp三次握手</a></li><li class="chapter-item "><a href="../../network/tcp压测客户端.html"><strong aria-hidden="true">5.4.</strong> tcp压测</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../other/linux1-ssh连接失败.html"><strong aria-hidden="true">6.1.</strong> ssh连接失败</a></li><li class="chapter-item "><a href="../../other/freeswitch_install.html"><strong aria-hidden="true">6.2.</strong> freeswitch安装</a></li><li class="chapter-item "><a href="../../other/freeswitch搭建呼叫中心-1方案设计.html"><strong aria-hidden="true">6.3.</strong> 呼叫中心设计</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> nginx</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/nginx/nginx1-搭建调试环境.html"><strong aria-hidden="true">7.1.</strong> 开发环境</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx2-基础架构.html"><strong aria-hidden="true">7.2.</strong> 基础架构</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx3-基础数据结构.html"><strong aria-hidden="true">7.3.</strong> 基础数据结构</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx4-内存管理.html"><strong aria-hidden="true">7.4.</strong> 内存管理</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx5-http.html"><strong aria-hidden="true">7.5.</strong> http</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx6-手写hello-handler.html"><strong aria-hidden="true">7.6.</strong> 手写handler</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="前言"><a class="header" href="#前言">前言</a></h2>
+<p>本系列基于golang 1.20.4版本
+我们先查找下启动入口,编写一个最简单的demo查找下启动入口，执行
+<code>go build demo.go</code>后,得到执行文件,然后我们使用readelf查找到启动的内存地址(0x456c40),使用dlv寻找到启动代码在rt0_linux_amd64.s里。</p>
+<pre><code class="language-go">//demo.go
+package main
+func main(){
+    println(&quot;hello&quot;)
+}
+</code></pre>
+<!--more-->
+<pre><code class="language-shell">root@node1:~/work/go/demo# readelf -h demo
+ELF 头：
+  Magic：  7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 
+  类别:                              ELF64
+  数据:                              2 补码，小端序 (little endian)
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI 版本:                          0
+  类型:                              EXEC (可执行文件)
+  系统架构:                          Advanced Micro Devices X86-64
+  版本:                              0x1
+  入口点地址：              0x456c40
+  程序头起点：              64 (bytes into file)
+  Start of section headers:          456 (bytes into file)
+  标志：             0x0
+  Size of this header:               64 (bytes)
+  Size of program headers:           56 (bytes)
+  Number of program headers:         7
+  Size of section headers:           64 (bytes)
+  Number of section headers:         23
+  Section header string table index: 3
+  
+root@node1:~/work/go/demo# dlv exec demo
+Type 'help' for list of commands.
+(dlv) b *0x456c40
+Breakpoint 1 set at 0x456c40 for _rt0_amd64_linux() /usr/local/go/src/runtime/rt0_linux_amd64.s:8
+</code></pre>
+<p>以linux amd为例,启动文件如下如下</p>
+<pre><code class="language-plan9_x86">// ~go/src/runtime/rt0_linux_amd64.s
+#include &quot;textflag.h&quot;
+TEXT _rt0_amd64_linux(SB),NOSPLIT,$-8
+JMP	_rt0_amd64(SB)
+
+TEXT _rt0_amd64_linux_lib(SB),NOSPLIT,$0
+JMP	_rt0_amd64_lib(SB)
+</code></pre>
+<p>调用了我们的_rt0_amd64,我们继续看_rt0_amd64做了哪些事</p>
+<pre><code class="language-plan9_x86">// ~go/src/runtime/asan_amd64.s
+//为了方便读者,多余的都删除,感兴趣可以找源文件阅读
+TEXT _rt0_amd64(SB),NOSPLIT,$-8
+	MOVQ	0(SP), DI	// argc
+	LEAQ	8(SP), SI	// argv
+	JMP	runtime·rt0_go(SB)
+	
+TEXT runtime·rt0_go(SB),NOSPLIT|NOFRAME|TOPFRAME,$0
+    {......}
+    //argc，argv 作为操作系统的参数传递给args函数
+    MOVQ	DI, AX			// argc
+    MOVQ	SI, BX			// argv
+    // create istack out of the given (operating system) stack.
+    // _cgo_init may update stackguard.
+    MOVQ	$runtime·g0(SB), DI  //// 初始化 g0 执行栈
+   {......}
+    //注意着下面四个调用,我们后文基于这4个
+    //类型检查 在src/runtime/runtime1.go-&gt;check()方法,感兴趣可以自己查看
+    CALL	runtime·check(SB) 
+    CALL	runtime·args(SB)
+    CALL	runtime·osinit(SB)
+    CALL	runtime·schedinit(SB)
+    
+    // create a new goroutine to start program
+    MOVQ	$runtime·mainPC(SB), AX		// entry
+    // start this M
+    CALL	runtime·newproc(SB)
+    CALL	runtime·mstart(SB)
+    CALL	runtime·abort(SB)	// mstart should never return
+</code></pre>
+<p>上面_rt0_amd64就是我们启动的主流程汇编调用,下面我们来分析下每个调用具体干了啥</p>
+<h3 id="11-runtimeargssb"><a class="header" href="#11-runtimeargssb">1.1 runtime.args(SB)</a></h3>
+<p>设置argv，auxv</p>
+<pre><code class="language-go">// src/runtime/runtime1.go
+func args(c int32, v **byte) {
+	argc = c
+	argv = v
+	sysargs(c, v)
+}
+
+func sysargs(argc int32, argv **byte) {
+	// skip over argv, envp to get to auxv
+	for argv_index(argv, n) != nil {
+		n++
+	}
+	if pairs := sysauxv(auxvp[:]); pairs != 0 {
+		auxv = auxvp[: pairs*2 : pairs*2]
+		return
+	}
+	{......}
+    pairs := sysauxv(auxvreadbuf[:])
+}
+
+//我们主要看sysauxv 方法
+func sysauxv(auxv []uintptr) (pairs int) {
+	var i int
+	for ; auxv[i] != _AT_NULL; i += 2 {
+		tag, val := auxv[i], auxv[i+1]
+		switch tag {
+		case _AT_RANDOM:
+			// The kernel provides a pointer to 16-bytes
+			// worth of random data.
+			startupRandomData = (*[16]byte)(unsafe.Pointer(val))[:]
+
+		case _AT_PAGESZ:
+			//读取内存也大小,在第三讲go内存管理我们会再讲该变量
+			physPageSize = val
+
+		case _AT_SECURE:
+			secureMode = val == 1
+		}
+
+		archauxv(tag, val)
+		vdsoauxv(tag, val)
+	}
+	return i / 2
+}
+</code></pre>
+<h3 id="12-runtimeosinitsb"><a class="header" href="#12-runtimeosinitsb">1.2 runtime·osinit(SB)</a></h3>
+<p>完成对 CPU 核心数的获取，以及设置内存页大小,特别注意！！！<br />
+在Container里获取到的runtime.NumCPU()=ncpu是主机的, 可通过<a href="&#x27;https://github.com/uber-go/automaxprocs&#x27;">https://github.com/uber-go/automaxprocs</a>获取容器cpu,<br />
+有兴趣的了解的读者可以可以看看容器cgroup相关<a href="&#x27;http://blog.2pg.cn/2023/05/20/1-docker%E6%8A%80%E6%9C%AF%E8%AF%A6%E8%A7%A3/&#x27;">docker技术详解</a></p>
+<pre><code class="language-go">func osinit() {
+	//核心的逻辑sched_getaffinit获取一个数据一堆计算后最终得到n cpu个数
+	//在sys_linux_amd64.s用汇编产生系统调用SYS_sched_getaffinity
+	//有兴趣可以搜索下SYS_sched_getaffinity
+	ncpu = getproccount()
+	//getHugePageSize() 提高内存管理的性能透明大页
+	//root@node1:~# cat /sys/kernel/mm/transparent_hugepage/hpage_pmd_size
+	//2097152
+	physHugePageSize = getHugePageSize()
+	{......}
+	osArchInit()
+}
+</code></pre>
+<h3 id="13-runtimeschedinitsb"><a class="header" href="#13-runtimeschedinitsb">1.3 runtime·schedinit(SB)</a></h3>
+<p>主要负责各种运行时组件初始化工作</p>
+<pre><code class="language-go">// src/runtime/proc.go
+// The bootstrap sequence is:
+//
+//	call osinit
+//	call schedinit
+//	make &amp; queue new G
+//	call runtime·mstart
+//
+// The new G calls runtime·main.
+func schedinit() {
+	// raceinit must be the first call to race detector.
+	// In particular, it must be done before mallocinit below calls racemapshadow.
+	gp := getg()
+	if raceenabled {
+		//race检测初始化
+		gp.racectx, raceprocctx0 = raceinit()
+	}
+    //最大m数量,包含状态未die的m
+	sched.maxmcount = 10000
+
+	//gc里的stw
+	// The world starts stopped.
+	worldStopped()
+
+	//栈初始化
+	stackinit()
+	//内存初始化
+	mallocinit()
+	fastrandinit()         // must run before mcommoninit
+	//初始化当前m
+	mcommoninit(gp.m, -1)
+	//gc初始化,及三色标记法
+	gcinit()
+
+
+	//上次网络轮训的时间,网络部分讲
+	sched.lastpoll.Store(nanotime())
+
+    // 通过CPU核心数和 GOMAXPROCS 环境变量确定 P 的数量
+	procs := ncpu
+	if n, ok := atoi32(gogetenv(&quot;GOMAXPROCS&quot;)); ok &amp;&amp; n &gt; 0 {
+		procs = n
+	}
+	
+	//关闭stw
+	// World is effectively started now, as P's can run.
+	worldStarted()
+}
+
+</code></pre>
+<h3 id="14-runtimemstartsb"><a class="header" href="#14-runtimemstartsb">1.4 runtime·mstart(SB)</a></h3>
+<p>主goroutine的启动,及g0</p>
+<pre><code class="language-go">main() {
+	mp := getg().m
+
+	
+	// Max stack size is 1 GB on 64-bit, 250 MB on 32-bit.
+	// Using decimal instead of binary GB and MB because
+	// they look nicer in the stack overflow failure message.
+	// 执行栈最大限制：1GB（64位系统）或者 250MB（32位系统）
+	if goarch.PtrSize == 8 {
+		maxstacksize = 1000000000
+	} else {
+		maxstacksize = 250000000
+	}
+
+	// An upper limit for max stack size. Used to avoid random crashes
+	// after calling SetMaxStack and trying to allocate a stack that is too big,
+	// since stackalloc works with 32-bit sizes.
+	maxstackceiling = 2 * maxstacksize
+
+	if GOARCH != &quot;wasm&quot; { // no threads on wasm yet, so no sysmon
+		//启动监控用于垃圾回收,抢占调度
+		systemstack(func() {
+			newm(sysmon, nil, -1)
+		})
+	}
+
+	//锁死主线程,例如我们在调用c代码时候,goroutine需要独占线程,可用该方法独占m
+	// Lock the main goroutine onto this, the main OS thread,
+	// during initialization. Most programs won't care, but a few
+	// do require certain calls to be made by the main thread.
+	// Those can arrange for main.main to run in the main thread
+	// by calling runtime.LockOSThread during initialization
+	// to preserve the lock.
+	lockOSThread()
+
+	
+    //执行init函数,编译器把包中所有的init函数存在runtime_inittasks里
+	doInit(runtime_inittasks) // Must be before defer.
+	
+    // 启动垃圾回收器后台操作
+	gcenable()
+
+	
+
+	needUnlock = false
+	unlockOSThread()
+
+	if isarchive || islibrary {
+		// A program compiled with -buildmode=c-archive or c-shared
+		// has a main, but it is not executed.
+		return
+	}
+    // 执行用户main包中的 main函数
+	fn := main_main // make an indirect call, as the linker doesn't know the address of the main package when laying down the runtime
+	fn()
+	if raceenabled {
+        //开启data -race的退出
+		runExitHooks(0) // run hooks now, since racefini does not return
+		racefini()
+	}
+	//退出并运行退出hook
+	runExitHooks(0)
+	exit(0)
+	
+}
+</code></pre>
+<h3 id="15-总结"><a class="header" href="#15-总结">1.5 总结</a></h3>
+<p>通过上文分析我们得知了go程序从runtime.<em>rt0_amd64</em>*(各个平台汇编文件不一样)启动,然后转到runtime.rt0_go调用,主要检查参数,以及设置cpu核心和内存<br />
+页大小,随后在schedinit中,对整个程序进行初始化,最后通过newproc和mstart由点读起转换g0执行<br />
+在g0中,systemstack负责后台监控,runtime_init运行初始化函数,main_main运行用户态main函数。<br />
+下面我们再来看看init的执行顺序</p>
+<h2 id="2-init执行顺序"><a class="header" href="#2-init执行顺序">2 init执行顺序</a></h2>
+<p>由上文我们doInit(runtime_inittasks)得知,函数init会被linker存储到runtime_inittasks里，具体逻辑为<br />
+计算出执行它们的良好顺序，并发出该顺序供运行时使用,其次根据调用链,A倒入B包则会先初始化B包,<br />
+最后此函数计算所有 inittask 记录的排序，以便该顺序尊重所有依赖项，并在给定该限制的情况下，按字典顺序对 inittask 进行排序。
+对比之前版本,现在按字典序排序,完整代码在如下两个文件中</p>
+<pre><code class="language-go">// src/cmd/link/internal/ld/inittask.go
+// cmd/compile/internal/pkginit/init.go
+// Inittasks finds inittask records, figures out a good
+// order to execute them in, and emits that order for the
+// runtime to use.
+//
+// An inittask represents the initialization code that needs
+// to be run for a package. For package p, the p..inittask
+// symbol contains a list of init functions to run, both
+// explicit user init functions and implicit compiler-generated
+// init functions for initializing global variables like maps.
+//
+// In addition, inittask records have dependencies between each
+// other, mirroring the import dependencies. So if package p
+// imports package q, then there will be a dependency p -&gt; q.
+// We can't initialize package p until after package q has
+// already been initialized.
+//
+// Package dependencies are encoded with relocations. If package
+// p imports package q, then package p's inittask record will
+// have a R_INITORDER relocation pointing to package q's inittask
+// record. See cmd/compile/internal/pkginit/init.go.
+//
+// This function computes an ordering of all of the inittask
+// records so that the order respects all the dependencies,
+// and given that restriction, orders the inittasks in
+// lexicographic order.
+func (ctxt *Link) inittasks() {
+	switch ctxt.BuildMode {
+	case BuildModeExe, BuildModePIE, BuildModeCArchive, BuildModeCShared:
+		// Normally the inittask list will be run on program startup.
+		ctxt.mainInittasks = ctxt.inittaskSym(&quot;main..inittask&quot;, &quot;go:main.inittasks&quot;)
+	case BuildModePlugin:
+		// For plugins, the list will be run on plugin load.
+		ctxt.mainInittasks = ctxt.inittaskSym(fmt.Sprintf(&quot;%s..inittask&quot;, objabi.PathToPrefix(*flagPluginPath)), &quot;go:plugin.inittasks&quot;)
+		// Make symbol local so multiple plugins don't clobber each other's inittask list.
+		ctxt.loader.SetAttrLocal(ctxt.mainInittasks, true)
+	case BuildModeShared:
+		// Nothing to do. The inittask list will be built by
+		// the final build (with the -linkshared option).
+	default:
+		Exitf(&quot;unhandled build mode %d&quot;, ctxt.BuildMode)
+	}
+
+	// If the runtime is one of the packages we are building,
+	// initialize the runtime_inittasks variable.
+	ldr := ctxt.loader
+	if ldr.Lookup(&quot;runtime.runtime_inittasks&quot;, 0) != 0 {
+		t := ctxt.inittaskSym(&quot;runtime..inittask&quot;, &quot;go:runtime.inittasks&quot;)
+
+		// This slice header is already defined in runtime/proc.go, so we update it here with new contents.
+		sh := ldr.Lookup(&quot;runtime.runtime_inittasks&quot;, 0)
+		sb := ldr.MakeSymbolUpdater(sh)
+		sb.SetSize(0)
+		sb.SetType(sym.SNOPTRDATA) // Could be SRODATA, but see issue 58857.
+		sb.AddAddr(ctxt.Arch, t)
+		sb.AddUint(ctxt.Arch, uint64(ldr.SymSize(t)/int64(ctxt.Arch.PtrSize)))
+		sb.AddUint(ctxt.Arch, uint64(ldr.SymSize(t)/int64(ctxt.Arch.PtrSize)))
+	}
+}
+
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../go/base/7.slice详解.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../go/runtime/2.golang源码阅读-schedule1.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../go/base/7.slice详解.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../go/runtime/2.golang源码阅读-schedule1.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

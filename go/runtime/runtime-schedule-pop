@@ -1,0 +1,5 @@
+[schedule]->[runtime.execute]->[runtime.gogo]->[runtime.goexit]
+( schedule: [schedule],[runnableGcWorker],[globrunqget/61],[runqget],[findrunnable] )
+[findrunnable] -> [top] -> [wakefing]
+(top: [wakefing]->[runqget1]->[globrunqget]->[netpoll]->[runqsteal])
+[runqsteal]->[gc]

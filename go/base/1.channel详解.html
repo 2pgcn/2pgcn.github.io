@@ -1,0 +1,650 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>channel</title>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-NBTSW2TH');</script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-N6K15VE892"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-N6K15VE892');
+        </script>
+        <!-- End Google Tag Manager -->
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NBTSW2TH"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../index.html"><strong aria-hidden="true">1.</strong> 最近更新</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.</strong> golang</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">2.1.</strong> golang基础数据结构</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../go/base/1.channel详解.html" class="active"><strong aria-hidden="true">2.1.1.</strong> channel</a></li><li class="chapter-item "><a href="../../go/base/2.time详解.html"><strong aria-hidden="true">2.1.2.</strong> time</a></li><li class="chapter-item "><a href="../../go/base/3.select详解.html"><strong aria-hidden="true">2.1.3.</strong> select</a></li><li class="chapter-item "><a href="../../go/base/4.sync上.html"><strong aria-hidden="true">2.1.4.</strong> sync上</a></li><li class="chapter-item "><a href="../../go/base/5.sync下.html"><strong aria-hidden="true">2.1.5.</strong> sync下</a></li><li class="chapter-item "><a href="../../go/base/6.map详解.html"><strong aria-hidden="true">2.1.6.</strong> map</a></li><li class="chapter-item "><a href="../../go/base/7.slice详解.html"><strong aria-hidden="true">2.1.7.</strong> slice</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> golang runtime源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../go/runtime/1.golang源码阅读-go-start.html"><strong aria-hidden="true">2.2.1.</strong> go启动流程</a></li><li class="chapter-item "><a href="../../go/runtime/2.golang源码阅读-schedule1.html"><strong aria-hidden="true">2.2.2.</strong> schedule上</a></li><li class="chapter-item "><a href="../../go/runtime/3.golang源码阅读-schedule2.html"><strong aria-hidden="true">2.2.3.</strong> schedule下</a></li><li class="chapter-item "><a href="../../go/runtime/4.golang源码阅读-sysmon详解.html"><strong aria-hidden="true">2.2.4.</strong> sysmon详解</a></li><li class="chapter-item "><a href="../../go/runtime/5.golang源码阅读-内存分配.html"><strong aria-hidden="true">2.2.5.</strong> 内存分配</a></li><li class="chapter-item "><a href="../../go/runtime/6.golang源码阅读-netpoll详解.html"><strong aria-hidden="true">2.2.6.</strong> netpoll详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.3.</strong> golang杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.3.1.</strong> 长连接无损迁移</div></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> 队列</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">3.1.</strong> kafka</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 云原生</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.1.</strong> 前置知识</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/base/k8s核心对象.html"><strong aria-hidden="true">4.1.1.</strong> k8s核心对象</a></li><li class="chapter-item "><a href="../../k8s/base/docker详解.html"><strong aria-hidden="true">4.1.2.</strong> docker原理</a></li><li class="chapter-item "><a href="../../k8s/base/pod详解.html"><strong aria-hidden="true">4.1.3.</strong> pod详解</a></li><li class="chapter-item "><a href="../../k8s/base/k8s-schedule详解.html"><strong aria-hidden="true">4.1.4.</strong> schedule</a></li><li class="chapter-item "><a href="../../k8s/base/apiserver访问控制.html"><strong aria-hidden="true">4.1.5.</strong> apiserver访问控制</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.2.</strong> 网关</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.2.1.</strong> traefik</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/traefik/1.traefik基础概念.html"><strong aria-hidden="true">4.2.1.1.</strong> traefik基础概念</a></li><li class="chapter-item "><a href="../../gateway/traefik/4.traefik启动流程源码分析.html"><strong aria-hidden="true">4.2.1.2.</strong> traefik启动流程</a></li><li class="chapter-item "><a href="../../gateway/traefik/5.traefik-EntryPoints详解上.html"><strong aria-hidden="true">4.2.1.3.</strong> traefik-EntryPoints详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/6.traefik-router详解.html"><strong aria-hidden="true">4.2.1.4.</strong> traefik-router详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/7.traefik-services详解.html"><strong aria-hidden="true">4.2.1.5.</strong> traefik-services详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/8.traefik-provider详解.html"><strong aria-hidden="true">4.2.1.6.</strong> traefik-provider详解</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.3.</strong> serviceMesh</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.4.</strong> k8s控制器源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/controller/replicaset详解.html"><strong aria-hidden="true">4.4.1.</strong> replicaset详解</a></li><li class="chapter-item "><a href="../../k8s/controller/deploy详解.html"><strong aria-hidden="true">4.4.2.</strong> deploy详解</a></li><li class="chapter-item "><a href="../../k8s/controller/endpoint详解.html"><strong aria-hidden="true">4.4.3.</strong> endpoint详解</a></li><li class="chapter-item "><a href="../../k8s/controller/services详解.html"><strong aria-hidden="true">4.4.4.</strong> services详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.5.</strong> k8s cni源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/cni/cni详解.html"><strong aria-hidden="true">4.5.1.</strong> cni基础</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.6.</strong> k8s cri源码分析</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 网络</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../network/tcp-1-环境.html"><strong aria-hidden="true">5.1.</strong> 环境</a></li><li class="chapter-item "><a href="../../network/icmp.html"><strong aria-hidden="true">5.2.</strong> icmp协议</a></li><li class="chapter-item "><a href="../../network/tcp-2-三次握手.html"><strong aria-hidden="true">5.3.</strong> tcp三次握手</a></li><li class="chapter-item "><a href="../../network/tcp压测客户端.html"><strong aria-hidden="true">5.4.</strong> tcp压测</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../other/linux1-ssh连接失败.html"><strong aria-hidden="true">6.1.</strong> ssh连接失败</a></li><li class="chapter-item "><a href="../../other/freeswitch_install.html"><strong aria-hidden="true">6.2.</strong> freeswitch安装</a></li><li class="chapter-item "><a href="../../other/freeswitch搭建呼叫中心-1方案设计.html"><strong aria-hidden="true">6.3.</strong> 呼叫中心设计</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> nginx</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/nginx/nginx1-搭建调试环境.html"><strong aria-hidden="true">7.1.</strong> 开发环境</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx2-基础架构.html"><strong aria-hidden="true">7.2.</strong> 基础架构</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx3-基础数据结构.html"><strong aria-hidden="true">7.3.</strong> 基础数据结构</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx4-内存管理.html"><strong aria-hidden="true">7.4.</strong> 内存管理</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx5-http.html"><strong aria-hidden="true">7.5.</strong> http</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx6-手写hello-handler.html"><strong aria-hidden="true">7.6.</strong> 手写handler</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="channel详解"><a class="header" href="#channel详解">channel详解</a></h1>
+<h3 id="chan须知"><a class="header" href="#chan须知">chan须知</a></h3>
+<p>在golang中,chan用于多个go中的数据交互,分有buff和无buff,定义如下,无buf会阻塞发送端以及接收端,知道buf里数据被取走发送端才会解除阻塞<br />
+有buf则在buf满之前只阻塞接收端,下面我们取看看底层数据结构,以及各种情况go如何调度</p>
+<pre><code class="language-go">make(chan int,1) //无buff
+make(chan int,10) //有buff
+</code></pre>
+<p>我们先来找下chan在底层的定义，通过dlv找到创建chan的具体实现是runtime.makechan</p>
+<pre><code class="language-go">//chan.go
+package main
+func main(){
+    _ = make(chan int,1)
+}
+</code></pre>
+<pre><code class="language-shell">#通过dlv找到创建chan go具体的代码
+root@node1:~/work/go/demo# dlv debug chan.go 
+Type 'help' for list of commands.
+(dlv) b main.main
+Breakpoint 1 set at 0x460dc6 for main.main() ./chan.go:3
+(dlv) c
+&gt; main.main() ./chan.go:3 (hits goroutine(1):1 total:1) (PC: 0x460dc6)
+     1:	package main
+     2:	
+=&gt;   3:	func main(){
+     4:	    _ = make(chan int,1)
+     5:	}
+(dlv) disass
+TEXT main.main(SB) /root/work/go/demo/chan.go
+	chan.go:3	0x460dc0	493b6610	cmp rsp, qword ptr [r14+0x10]
+	chan.go:3	0x460dc4	7629		jbe 0x460def
+=&gt;	chan.go:3	0x460dc6*	4883ec18	sub rsp, 0x18
+	chan.go:3	0x460dca	48896c2410	mov qword ptr [rsp+0x10], rbp
+	chan.go:3	0x460dcf	488d6c2410	lea rbp, ptr [rsp+0x10]
+	chan.go:4	0x460dd4	488d0585440000	lea rax, ptr [rip+0x4485]
+	chan.go:4	0x460ddb	bb01000000	mov ebx, 0x1
+	chan.go:4	0x460de0	e87b38faff	call $runtime.makechan
+	chan.go:5	0x460de5	488b6c2410	mov rbp, qword ptr [rsp+0x10]
+	chan.go:5	0x460dea	4883c418	add rsp, 0x18
+	chan.go:5	0x460dee	c3		ret
+	chan.go:3	0x460def	e84cccffff	call $runtime.morestack_noctxt
+	chan.go:3	0x460df4	ebca		jmp $main.main
+#通过不断输入si跳转到runtime.makechan后 找到文件位置如下
+##&gt; runtime.makechan() /usr/local/go/src/runtime/chan.go:72 (PC: 0x404660)
+</code></pre>
+<p>下面我们一起来看看具体的数据结构</p>
+<h3 id="channel-数据结构"><a class="header" href="#channel-数据结构">channel 数据结构</a></h3>
+<pre><code class="language-go">//可以简单理解成环形buf, 具体结构看下图
+type hchan struct {
+	//整个chan &lt;-放了多少数据
+	qcount   uint           // total data in the queue
+	//总共可以放多少数据
+	dataqsiz uint           // size of the circular queue
+	//存放数据的数组
+	buf      unsafe.Pointer // points to an array of dataqsiz elements
+	//能够收发元素的大小
+	elemsize uint16
+	closed   uint32
+	//make 里chan的类型
+	elemtype *_type // element type
+	//发送处理到的index
+	sendx    uint   // send index
+	//接收buf的index
+	recvx    uint   // receive index
+	//被阻塞的接收g列表，双向链表
+	recvq    waitq  // list of recv waiters
+	//被阻塞的发送g列表
+	sendq    waitq  // list of send waiters
+
+	// lock protects all fields in hchan, as well as several
+	// fields in sudogs blocked on this channel.
+	//
+	// Do not change another G's status while holding this lock
+	// (in particular, do not ready a G), as this can deadlock
+	// with stack shrinking.
+	lock mutex
+}
+</code></pre>
+<p>这段数据结构还挺简单的,主要就是一个环形数组,我们继续看make初始化方法</p>
+<pre><code class="language-go">//篇幅有限,删除掉了一堆校验
+func makechan(t *chantype, size int) *hchan {
+	elem := t.elem
+	mem, overflow := math.MulUintptr(elem.size, uintptr(size))
+	
+	var c *hchan
+	switch {
+	//mem为0,对应我们make(chan type,0)这种情况,仅分配一段内存
+	case mem == 0:
+		// Queue or element size is zero.
+		c = (*hchan)(mallocgc(hchanSize, nil, true))
+		// Race detector uses this location for synchronization.
+		c.buf = c.raceaddr()
+    //存储的类型不是指针类型,分配一段内存空间
+	//补充 elem.ptrdata对应是该结构指针截止的长度位置
+	case elem.ptrdata == 0:
+		// Elements do not contain pointers.
+		// Allocate hchan and buf in one call.
+		c = (*hchan)(mallocgc(hchanSize+mem, nil, true))
+		c.buf = add(unsafe.Pointer(c), hchanSize)
+	//默认分配内存
+    default:
+		// Elements contain pointers.
+		c = new(hchan)
+		c.buf = mallocgc(mem, elem, true)
+	}
+	c.elemsize = uint16(elem.size)
+	c.elemtype = elem
+	c.dataqsiz = uint(size)
+	lockInit(&amp;c.lock, lockRankHchan)
+	return c
+}
+</code></pre>
+<p>初始分配就是分配好hchan的结构体,接下来我们看发送和接收数据。</p>
+<h3 id="channel-发送数据"><a class="header" href="#channel-发送数据">channel 发送数据</a></h3>
+<p>在上文中的代码我们改成如下结果，根据dlv分析得到执行函数未runtime.chansend1,下面我们看看具体的代码,由于代码比较复杂,我们先看流程图,后根据每种情况<br />
+看具体代码</p>
+<pre><code class="language-go">//chan.go
+package main
+func main(){
+	chan1 := make(chan int,10)
+	chan1 &lt;- 1
+	chan1 &lt;- 2
+}
+</code></pre>
+<pre><code class="language-shell">#寻找发送数据代码位置
+&gt; main.main() ./chan.go:5 (PC: 0x458591)
+Warning: debugging optimized function
+	chan.go:4	0x458574	488d05654b0000	lea rax, ptr [rip+0x4b65]
+	chan.go:4	0x45857b	bb0a000000	mov ebx, 0xa
+	chan.go:4	0x458580	e8fbb6faff	call $runtime.makechan
+	chan.go:4	0x458585	4889442410	mov qword ptr [rsp+0x10], rax
+	chan.go:5	0x45858a	488d1d2f410200	lea rbx, ptr [rip+0x2412f]
+=&gt;	chan.go:5	0x458591	e8cab8faff	call $runtime.chansend1
+	chan.go:6	0x458596	488b442410	mov rax, qword ptr [rsp+0x10]
+	chan.go:6	0x45859b	488d1d26410200	lea rbx, ptr [rip+0x24126]
+	chan.go:6	0x4585a2	e8b9b8faff	call $runtime.chansend1
+	chan.go:7	0x4585a7	488b6c2418	mov rbp, qword ptr [rsp+0x18]
+	chan.go:7	0x4585ac	4883c420	add rsp, 0x20
+# runtime.chansend1() /usr/local/go/src/runtime/chan.go:144 (PC: 0x403e60)
+</code></pre>
+<pre><code class="language-shell"># chan 发送数据流程图
+                                                                                       +-----------+
+                                                                                       | put data  |
+                                                                                       +-----------+
+                                                                                         ^
+                                                                                         | buf没满
+                                                                                         |
++--------------+  chan not nil   +-------------------+     +------------+  not sudog   +-----------+  buf满了   +-----------------------+     +---------------------+
+|   channel    | --------------&gt; |   non blocking    | --&gt; |    lock    | -----------&gt; |   chan    | -------&gt; | pack sudog &amp;&amp; enqueue | --&gt; | go park &amp;&amp; schedule |
++--------------+                 +-------------------+     +------------+              +-----------+          +-----------------------+     +---------------------+
+  |                                |                         |
+  | chan is nil                    | is close &amp;&amp; full        | get sudog
+  v                                v                         v
++--------------+                 +-------------------+     +------------+              +-----------+          +-----------------------+
+|    gopark    |                 |   return false    |     |    send    | -----------&gt; | copy data | -------&gt; |        goready        |
++--------------+                 +-------------------+     +------------+              +-----------+          +-----------------------+
+</code></pre>
+<p>由上图得知,我们chan &lt;- i会遇到几种情况</p>
+<ul>
+<li>如果recvq上存在被阻塞的g,则会直接讲数据发给当前g,设置成下一个运行的g</li>
+<li>如果chan buf没满,直接将数据存到buf中</li>
+<li>如果都不满足,创建一个sudog,并将其加入chan的sendq队列,当前g陷入阻塞等待chan的数据被接收
+下面我们再结合代码看下具体的实现</li>
+<li></li>
+</ul>
+<p>首先判断chan为空,永久阻塞，</p>
+<pre><code class="language-go">func chansend(c *hchan, ep unsafe.Pointer, block bool, callerpc uintptr) bool {
+    //c为空且为阻塞,park住等待接收端接收
+	if c == nil {
+        if !block {
+            return false
+        }
+        gopark(nil, nil, waitReasonChanSendNilChan, traceEvGoStop, 2)
+        throw(&quot;unreachable&quot;)
+    }
+</code></pre>
+<p>然后判断非阻塞且未被关闭且buf满了,返回false,然后加锁</p>
+<pre><code class="language-go">if !block &amp;&amp; c.closed == 0 &amp;&amp; full(c) {
+    return false
+}
+lock(&amp;c.lock)
+</code></pre>
+<p>然后判断hchan.waitq上是否有等待的g,也就是代码里&lt;-chan的g,如果拿到了g,则执行send</p>
+<pre><code class="language-go">if sg := c.recvq.dequeue(); sg != nil {
+		// Found a waiting receiver. We pass the value we want to send
+		// directly to the receiver, bypassing the channel buffer (if any).
+		send(c, sg, ep, func() { unlock(&amp;c.lock) }, 3)
+		return true
+	}
+</code></pre>
+<p>dequeue()是拿g的逻辑,waitq是一个sudog的双向链表,存了first,last的sudog,sudog我们在runtime系列里会有一节详解,</p>
+<pre><code class="language-go">func (q *waitq) dequeue() *sudog {
+	for {
+		sgp := q.first
+		if sgp == nil {
+			return nil
+		}
+		y := sgp.next
+		if y == nil {
+			q.first = nil
+			q.last = nil
+		} else {
+			y.prev = nil
+			q.first = y
+			sgp.next = nil // mark as removed (see dequeueSudoG)
+		}
+		if sgp.isSelect &amp;&amp; !sgp.g.selectDone.CompareAndSwap(0, 1) {
+			continue
+		}
+
+		return sgp
+	}
+}
+</code></pre>
+<p>下面我们再来看看send的逻辑，sendDirect将chan里的数据拷贝给g,同时通过goready唤醒对应取数据的g</p>
+<pre><code class="language-go">
+func send(c *hchan, sg *sudog, ep unsafe.Pointer, unlockf func(), skip int) {
+	if sg.elem != nil {
+		sendDirect(c.elemtype, sg, ep)
+		sg.elem = nil
+	}
+	gp := sg.g
+	unlockf()
+	gp.param = unsafe.Pointer(sg)
+	sg.success = true
+	if sg.releasetime != 0 {
+		sg.releasetime = cputicks()
+	}
+	goready(gp, skip+1)
+}
+</code></pre>
+<p>当waitq上没有g在等待的时候，如果buf没满,将数据放到buf上继续</p>
+<pre><code class="language-go">if c.qcount &lt; c.dataqsiz {
+		// Space is available in the channel buffer. Enqueue the element to send.
+		qp := chanbuf(c, c.sendx)
+		if raceenabled {
+			racenotify(c, c.sendx, nil)
+		}
+		typedmemmove(c.elemtype, qp, ep)
+		c.sendx++
+		if c.sendx == c.dataqsiz {
+			c.sendx = 0
+		}
+		c.qcount++
+		unlock(&amp;c.lock)
+		return true
+	}
+</code></pre>
+<p>当buf满了,阻塞当前这个发送的g,并通过acquireSudog获取一个sudog绑定上当前的g,放入sendq的g队列中,同时gopack,等待调度重新唤醒,直到接收了数据后,<br />
+将sudog通过releaseSudog释放回池</p>
+<pre><code class="language-go">// Block on the channel. Some receiver will complete our operation for us.
+	gp := getg()
+	//获取sudog
+	mysg := acquireSudog()
+	mysg.releasetime = 0
+	if t0 != 0 {
+		mysg.releasetime = -1
+	}
+	// No stack splits between assigning elem and enqueuing mysg
+	// on gp.waiting where copystack can find it.
+	mysg.elem = ep
+	mysg.waitlink = nil
+	mysg.g = gp
+	mysg.isSelect = false
+	mysg.c = c
+	gp.waiting = mysg
+	gp.param = nil
+	c.sendq.enqueue(mysg)
+	// Signal to anyone trying to shrink our stack that we're about
+	// to park on a channel. The window between when this G's status
+	// changes and when we set gp.activeStackChans is not safe for
+	// stack shrinking.
+	gp.parkingOnChan.Store(true)
+	gopark(chanparkcommit, unsafe.Pointer(&amp;c.lock), waitReasonChanSend, traceEvGoBlockSend, 2)
+	// Ensure the value being sent is kept alive until the
+	// receiver copies it out. The sudog has a pointer to the
+	// stack object, but sudogs aren't considered as roots of the
+	// stack tracer.
+	KeepAlive(ep)
+
+	// someone woke us up.
+	if mysg != gp.waiting {
+		throw(&quot;G waiting list is corrupted&quot;)
+	}
+	gp.waiting = nil
+	gp.activeStackChans = false
+	closed := !mysg.success
+	gp.param = nil
+	if mysg.releasetime &gt; 0 {
+		blockevent(mysg.releasetime-t0, 2)
+	}
+	mysg.c = nil
+	releaseSudog(mysg)
+	if closed {
+		if c.closed == 0 {
+			throw(&quot;chansend: spurious wakeup&quot;)
+		}
+		panic(plainError(&quot;send on closed channel&quot;))
+	}
+	return true
+</code></pre>
+<h3 id="chan接收数据"><a class="header" href="#chan接收数据">chan接收数据</a></h3>
+<p>我们还是通过dlv找到接收数据具体调用为 CALL runtime.chanrecv1(SB),下面我们来看看具体流程，流程图如下</p>
+<pre><code class="language-shell">                                                                                                               +------------------+
+                                                                                                               |       recv       |
+                                                                                                               +------------------+
+                                              block                                                              ^
+                                     +-----------------------------------+                                       | sendq.dequeue()
+                                     |                                   v                                       |
++----------------+  chan not nil   +--------+  not block &amp;&amp; not recv   +------+     +--------------------+     +------------------+  buf为空   +-----------------------+     +-------------------+
+|  channelrecv   | --------------&gt; | block? | -----------------------&gt; | lock | --&gt; |    chan close?     | --&gt; |    not close     | -------&gt; | pack sudog &amp;&amp; enqueue | --&gt; | go park &amp;&amp; schedule |
++----------------+                 +--------+                          +------+     +--------------------+     +------------------+          +-----------------------+     +---------------------+
+  |                                                                                   |                          |
+  | chan is nil                                                                       | close &amp;&amp; qcount=0        | buf不为空
+  v                                                                                   v                          v
++----------------+                                                                  +--------------------+     +------------------+
+| gopark forever |                                                                  |       return       |     |    copy value    |
++----------------+                                                                  +--------------------+     +------------------+
+</code></pre>
+<p>下面让我们来看看具体代码,与发送重复的代码就省略了<br />
+先加锁,如果chan已经被关闭了且没有多余的数据了,直接返回,未关闭则先从sendq上取一个sudog,上文我们提到满了的时候则会有g通过sudog被gopark在sendq上<br />
+所以优先查看是否有被gopark的发送sudog,在recv方法里去ready，recv主要是唤醒发送的发送sudog,跟上文的send方法类似</p>
+<pre><code class="language-go">lock(&amp;c.lock)
+	if c.closed != 0 {
+		if c.qcount == 0 {
+			if raceenabled {
+				raceacquire(c.raceaddr())
+			}
+			unlock(&amp;c.lock)
+			if ep != nil {
+				typedmemclr(c.elemtype, ep)
+			}
+			return true, false
+		}
+	} else {
+		if sg := c.sendq.dequeue(); sg != nil {
+			recv(c, sg, ep, func() { unlock(&amp;c.lock) }, 3)
+			return true, true
+		}
+	}
+</code></pre>
+<p>当没没有send的sudog时候,判断buf是不是为空,不为空则取出数据,buf为空的情况下如果不需要阻塞,直接解锁返回</p>
+<pre><code class="language-go">if c.qcount &gt; 0 {
+		// Receive directly from queue
+		qp := chanbuf(c, c.recvx)
+		if raceenabled {
+			racenotify(c, c.recvx, nil)
+		}
+		if ep != nil {
+			typedmemmove(c.elemtype, ep, qp)
+		}
+		typedmemclr(c.elemtype, qp)
+		c.recvx++
+		if c.recvx == c.dataqsiz {
+			c.recvx = 0
+		}
+		c.qcount--
+		unlock(&amp;c.lock)
+		return true, true
+	}
+    if !block {
+        unlock(&amp;c.lock)
+    return false, false
+}
+</code></pre>
+<p>后面跟我们的send逻辑类似.获取一个sudog,添加进hchan.recvq里,等待chansend里逻辑唤醒,唤醒后通过releaseSudog放回sudog</p>
+<pre><code class="language-go">// no sender available: block on this channel.
+	gp := getg()
+	mysg := acquireSudog()
+	mysg.releasetime = 0
+	if t0 != 0 {
+		mysg.releasetime = -1
+	}
+	// No stack splits between assigning elem and enqueuing mysg
+	// on gp.waiting where copystack can find it.
+	mysg.elem = ep
+	mysg.waitlink = nil
+	gp.waiting = mysg
+	mysg.g = gp
+	mysg.isSelect = false
+	mysg.c = c
+	gp.param = nil
+	c.recvq.enqueue(mysg)
+	// Signal to anyone trying to shrink our stack that we're about
+	// to park on a channel. The window between when this G's status
+	// changes and when we set gp.activeStackChans is not safe for
+	// stack shrinking.
+	gp.parkingOnChan.Store(true)
+	gopark(chanparkcommit, unsafe.Pointer(&amp;c.lock), waitReasonChanReceive, traceEvGoBlockRecv, 2)
+
+	// someone woke us up
+	if mysg != gp.waiting {
+		throw(&quot;G waiting list is corrupted&quot;)
+	}
+	gp.waiting = nil
+	gp.activeStackChans = false
+	if mysg.releasetime &gt; 0 {
+		blockevent(mysg.releasetime-t0, 2)
+	}
+	success := mysg.success
+	gp.param = nil
+	mysg.c = nil
+	releaseSudog(mysg)
+	return true, success
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../go/base/2.time详解.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../go/base/2.time详解.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,2 @@
+[pollDesc 初始化]->[netpollGenericInit]
+[addTimer]->[netpollGenericInit]->[netpollinit]

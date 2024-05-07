@@ -1,0 +1,573 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>map</title>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-NBTSW2TH');</script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-N6K15VE892"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-N6K15VE892');
+        </script>
+        <!-- End Google Tag Manager -->
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NBTSW2TH"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../index.html"><strong aria-hidden="true">1.</strong> 最近更新</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.</strong> golang</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">2.1.</strong> golang基础数据结构</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../go/base/1.channel详解.html"><strong aria-hidden="true">2.1.1.</strong> channel</a></li><li class="chapter-item "><a href="../../go/base/2.time详解.html"><strong aria-hidden="true">2.1.2.</strong> time</a></li><li class="chapter-item "><a href="../../go/base/3.select详解.html"><strong aria-hidden="true">2.1.3.</strong> select</a></li><li class="chapter-item "><a href="../../go/base/4.sync上.html"><strong aria-hidden="true">2.1.4.</strong> sync上</a></li><li class="chapter-item "><a href="../../go/base/5.sync下.html"><strong aria-hidden="true">2.1.5.</strong> sync下</a></li><li class="chapter-item expanded "><a href="../../go/base/6.map详解.html" class="active"><strong aria-hidden="true">2.1.6.</strong> map</a></li><li class="chapter-item "><a href="../../go/base/7.slice详解.html"><strong aria-hidden="true">2.1.7.</strong> slice</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> golang runtime源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../go/runtime/1.golang源码阅读-go-start.html"><strong aria-hidden="true">2.2.1.</strong> go启动流程</a></li><li class="chapter-item "><a href="../../go/runtime/2.golang源码阅读-schedule1.html"><strong aria-hidden="true">2.2.2.</strong> schedule上</a></li><li class="chapter-item "><a href="../../go/runtime/3.golang源码阅读-schedule2.html"><strong aria-hidden="true">2.2.3.</strong> schedule下</a></li><li class="chapter-item "><a href="../../go/runtime/4.golang源码阅读-sysmon详解.html"><strong aria-hidden="true">2.2.4.</strong> sysmon详解</a></li><li class="chapter-item "><a href="../../go/runtime/5.golang源码阅读-内存分配.html"><strong aria-hidden="true">2.2.5.</strong> 内存分配</a></li><li class="chapter-item "><a href="../../go/runtime/6.golang源码阅读-netpoll详解.html"><strong aria-hidden="true">2.2.6.</strong> netpoll详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.3.</strong> golang杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.3.1.</strong> 长连接无损迁移</div></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> 队列</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">3.1.</strong> kafka</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 云原生</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.1.</strong> 前置知识</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/base/k8s核心对象.html"><strong aria-hidden="true">4.1.1.</strong> k8s核心对象</a></li><li class="chapter-item "><a href="../../k8s/base/docker详解.html"><strong aria-hidden="true">4.1.2.</strong> docker原理</a></li><li class="chapter-item "><a href="../../k8s/base/pod详解.html"><strong aria-hidden="true">4.1.3.</strong> pod详解</a></li><li class="chapter-item "><a href="../../k8s/base/k8s-schedule详解.html"><strong aria-hidden="true">4.1.4.</strong> schedule</a></li><li class="chapter-item "><a href="../../k8s/base/apiserver访问控制.html"><strong aria-hidden="true">4.1.5.</strong> apiserver访问控制</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.2.</strong> 网关</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.2.1.</strong> traefik</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/traefik/1.traefik基础概念.html"><strong aria-hidden="true">4.2.1.1.</strong> traefik基础概念</a></li><li class="chapter-item "><a href="../../gateway/traefik/4.traefik启动流程源码分析.html"><strong aria-hidden="true">4.2.1.2.</strong> traefik启动流程</a></li><li class="chapter-item "><a href="../../gateway/traefik/5.traefik-EntryPoints详解上.html"><strong aria-hidden="true">4.2.1.3.</strong> traefik-EntryPoints详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/6.traefik-router详解.html"><strong aria-hidden="true">4.2.1.4.</strong> traefik-router详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/7.traefik-services详解.html"><strong aria-hidden="true">4.2.1.5.</strong> traefik-services详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/8.traefik-provider详解.html"><strong aria-hidden="true">4.2.1.6.</strong> traefik-provider详解</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.3.</strong> serviceMesh</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.4.</strong> k8s控制器源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/controller/replicaset详解.html"><strong aria-hidden="true">4.4.1.</strong> replicaset详解</a></li><li class="chapter-item "><a href="../../k8s/controller/deploy详解.html"><strong aria-hidden="true">4.4.2.</strong> deploy详解</a></li><li class="chapter-item "><a href="../../k8s/controller/endpoint详解.html"><strong aria-hidden="true">4.4.3.</strong> endpoint详解</a></li><li class="chapter-item "><a href="../../k8s/controller/services详解.html"><strong aria-hidden="true">4.4.4.</strong> services详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.5.</strong> k8s cni源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/cni/cni详解.html"><strong aria-hidden="true">4.5.1.</strong> cni基础</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.6.</strong> k8s cri源码分析</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 网络</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../network/tcp-1-环境.html"><strong aria-hidden="true">5.1.</strong> 环境</a></li><li class="chapter-item "><a href="../../network/icmp.html"><strong aria-hidden="true">5.2.</strong> icmp协议</a></li><li class="chapter-item "><a href="../../network/tcp-2-三次握手.html"><strong aria-hidden="true">5.3.</strong> tcp三次握手</a></li><li class="chapter-item "><a href="../../network/tcp压测客户端.html"><strong aria-hidden="true">5.4.</strong> tcp压测</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../other/linux1-ssh连接失败.html"><strong aria-hidden="true">6.1.</strong> ssh连接失败</a></li><li class="chapter-item "><a href="../../other/freeswitch_install.html"><strong aria-hidden="true">6.2.</strong> freeswitch安装</a></li><li class="chapter-item "><a href="../../other/freeswitch搭建呼叫中心-1方案设计.html"><strong aria-hidden="true">6.3.</strong> 呼叫中心设计</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> nginx</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/nginx/nginx1-搭建调试环境.html"><strong aria-hidden="true">7.1.</strong> 开发环境</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx2-基础架构.html"><strong aria-hidden="true">7.2.</strong> 基础架构</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx3-基础数据结构.html"><strong aria-hidden="true">7.3.</strong> 基础数据结构</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx4-内存管理.html"><strong aria-hidden="true">7.4.</strong> 内存管理</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx5-http.html"><strong aria-hidden="true">7.5.</strong> http</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx6-手写hello-handler.html"><strong aria-hidden="true">7.6.</strong> 手写handler</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="map详解"><a class="header" href="#map详解">map详解</a></h2>
+<p>本文基于golang 1.22版本</p>
+<h2 id="哈希表的实现方式"><a class="header" href="#哈希表的实现方式">哈希表的实现方式</a></h2>
+<ul>
+<li>开放寻址法(感兴趣可自行查找了解)</li>
+<li>双哈希法 开放寻址的改良,多次哈希减少冲突</li>
+<li>拉链法 将一个bucket实现成一个链表,hash后落在同一个bucket里的key会插入链表来解决哈希冲突,golang是采用的链表解决冲突</li>
+</ul>
+<p>下文我们将从map的数据结构,初始化,增删改查来分析源码是怎么实现的</p>
+<h2 id="如何查找map创建源码"><a class="header" href="#如何查找map创建源码">如何查找map创建源码</a></h2>
+<p>golang代码如下，我们使用<code>go tool compile -N -l -S main.go</code>查看汇编代码,如下,小于8的通过runtime.makemap_small,大于8的runtime.makemap<br />
+还需注意,<code>make(map[xx]xx,int64)</code>这种形式会被特殊处理,最终也调用<code>runtime.makemap</code>，我们以<code>runtime.makemap</code>来分析</p>
+<pre><code class="language-go">package main
+
+var m1 = make(map[int]int, 0)
+var m2 = make(map[int]int, 10)
+</code></pre>
+<pre><code class="language-shell">...
+(main.go:3)    CALL    runtime.makemap_small(SB)
+(main.go:4)    CALL    runtime.makemap(SB)
+...
+</code></pre>
+<p>函数的定义如下</p>
+<pre><code class="language-go">//cmd/compile/internal/typecheck/_builtin/runtime.go
+func makemap64(mapType *byte, hint int64, mapbuf *any) (hmap map[any]any)
+func makemap(mapType *byte, hint int, mapbuf *any) (hmap map[any]any)
+func makemap_small() (hmap map[any]any)
+</code></pre>
+<p>具体我们来看makemap这个函数</p>
+<pre><code class="language-go">//runtime/map.go
+func makemap(t *maptype, hint int, h *hmap) *hmap {
+	//@step1 判断是否溢出
+	mem, overflow := math.MulUintptr(uintptr(hint), t.Bucket.Size_)
+	if overflow || mem &gt; maxAlloc {
+		hint = 0
+	}
+
+	//@step2 初始化hmap结构
+	// initialize Hmap
+	if h == nil {
+		h = new(hmap)
+	}
+	//随机哈希种子,防止碰撞共计
+	h.hash0 = uint32(rand())
+
+	// Find the size parameter B which will hold the requested # of elements.
+	// For hint &lt; 0 overLoadFactor returns false since hint &lt; bucketCnt.
+	B := uint8(0)
+	//@step3 设置桶的数量(2^B方个筒)
+	for overLoadFactor(hint, B) {
+		B++
+	}
+	h.B = B
+
+	//@step4 桶数量大于0 初始化桶内存
+	// allocate initial hash table
+	// if B == 0, the buckets field is allocated lazily later (in mapassign)
+	// If hint is large zeroing this memory could take a while.
+	if h.B != 0 {
+		var nextOverflow *bmap
+		h.buckets, nextOverflow = makeBucketArray(t, h.B, nil)
+		if nextOverflow != nil {
+			h.extra = new(mapextra)
+			h.extra.nextOverflow = nextOverflow
+		}
+	}
+
+	return h
+}
+</code></pre>
+<p>我们总结下,创建map的代码主要是返回了一个底层的hmap对象,具体的我们来看下hmap的结构体,主要的结构如下,bmap结构下文有图
+<img src="img/map1.png" alt="map1.png" /></p>
+<pre><code class="language-go">//runtime/map.go
+type hmap struct {
+	//总元素
+	count     int // # live cells == size of map.  Must be first (used by len() builtin)
+	//状态标位,如扩容中,正在被写入等
+	flags     uint8
+	//桶的个数=2^B
+	B         uint8  // log_2 of # of buckets (can hold up to loadFactor * 2^B items)
+	 uint16 // approximate number of overflow buckets; see incrnoverflow for details
+	//哈希种子,防止哈希碰撞共计
+	hash0     uint32 // hash seed
+        //存储桶的数组
+	buckets    unsafe.Pointer // array of 2^B Buckets. may be nil if count==0.
+	//发生扩容后 存的旧的bucket数组
+	oldbuckets unsafe.Pointer // previous bucket array of half the size, non-nil only when growing
+	nevacuate  uintptr        // progress counter for evacuation (buckets less than this have been evacuated)
+        //扩展字段
+	extra *mapextra // optional fields
+}
+</code></pre>
+<p>我们来总结下map的初始化</p>
+<ul>
+<li>判断长度调用makemap/makemap_small</li>
+<li>创建hmap结构体,桶的个数为2^B</li>
+<li>通过<code>makeBucketArray</code>分配具体数据</li>
+<li>分配扩展桶,具体个数我们来看<code>makeBucketArray</code>的具体逻辑</li>
+</ul>
+<h3 id="makebucketarray-的创建"><a class="header" href="#makebucketarray-的创建"><code>makeBucketArray</code> 的创建</a></h3>
+<ul>
+<li>当桶的个数小雨2^4时,由于数据较少,溢出桶没必要创建</li>
+<li>多余2^4时,会创建2^(B-4)个溢出桶</li>
+<li>溢出筒则添加到了buckets数组最后边,比如B=4,创建了16个桶+1个溢出筒,申请的数组长度为17</li>
+</ul>
+<pre><code class="language-go">//runtime/map.go 省略了部分不相干代码
+func makeBucketArray(t *maptype, b uint8, dirtyalloc unsafe.Pointer) (buckets unsafe.Pointer, nextOverflow *bmap) {
+	base := bucketShift(b)
+	nbuckets := base //桶的总个数
+	if b &gt;= 4 {
+		nbuckets += bucketShift(b - 4) //添加了溢出筒
+		sz := t.Bucket.Size_ * nbuckets
+		up := roundupsize(sz, t.Bucket.PtrBytes == 0)
+		if up != sz {
+			nbuckets = up / t.Bucket.Size_
+		}
+	}
+	if dirtyalloc == nil {
+		buckets = newarray(t.Bucket, int(nbuckets))
+	}
+    //有溢出桶的情况下,由代码将buckers与overflow分割
+	if base != nbuckets {
+		nextOverflow = (*bmap)(add(buckets, base*uintptr(t.BucketSize)))
+		last := (*bmap)(add(buckets, (nbuckets-1)*uintptr(t.BucketSize)))
+		last.setoverflow(t, (*bmap)(buckets))
+	}
+	return buckets, nextOverflow
+}
+</code></pre>
+<p>我们知道map的元素是放在bucket数组里,而具体存入的数据结构bmap如下图,我们放到map写入元素来讲解
+<img src="img/bmap.png" alt="map1.png" /></p>
+<h2 id="map的读"><a class="header" href="#map的读">map的读</a></h2>
+<p>map读写删除元素,逻辑整体差不多,都是找到对应的bucket桶然后去bmap里找,我们先看下读的相关逻辑,涉及到寻找key在map里对应的位置,<br />
+写仅在读的逻辑增加了map扩容,map对应的定义如下,根据key的不同,会调对应的mapaccess1(读),我们以<code>map[any]any</code>为例</p>
+<pre><code class="language-go">//cmd/compile/internal/typecheck/_builtin/runtime.go
+// *byte is really *runtime.Type
+func makemap64(mapType *byte, hint int64, mapbuf *any) (hmap map[any]any)
+func makemap(mapType *byte, hint int, mapbuf *any) (hmap map[any]any)
+func makemap_small() (hmap map[any]any)
+//读相关
+func mapaccess1(mapType *byte, hmap map[any]any, key *any) (val *any)
+func mapaccess1_fast32(mapType *byte, hmap map[any]any, key uint32) (val *any)
+func mapaccess1_fast64(mapType *byte, hmap map[any]any, key uint64) (val *any)
+func mapaccess1_faststr(mapType *byte, hmap map[any]any, key string) (val *any)
+func mapaccess1_fat(mapType *byte, hmap map[any]any, key *any, zero *byte) (val *any)
+func mapaccess2(mapType *byte, hmap map[any]any, key *any) (val *any, pres bool)
+func mapaccess2_fast32(mapType *byte, hmap map[any]any, key uint32) (val *any, pres bool)
+func mapaccess2_fast64(mapType *byte, hmap map[any]any, key uint64) (val *any, pres bool)
+func mapaccess2_faststr(mapType *byte, hmap map[any]any, key string) (val *any, pres bool)
+func mapaccess2_fat(mapType *byte, hmap map[any]any, key *any, zero *byte) (val *any, pres bool)
+//写相关
+func mapassign(mapType *byte, hmap map[any]any, key *any) (val *any)
+func mapassign_fast32(mapType *byte, hmap map[any]any, key uint32) (val *any)
+func mapassign_fast32ptr(mapType *byte, hmap map[any]any, key unsafe.Pointer) (val *any)
+func mapassign_fast64(mapType *byte, hmap map[any]any, key uint64) (val *any)
+func mapassign_fast64ptr(mapType *byte, hmap map[any]any, key unsafe.Pointer) (val *any)
+func mapassign_faststr(mapType *byte, hmap map[any]any, key string) (val *any)
+func mapiterinit(mapType *byte, hmap map[any]any, hiter *any)
+func mapdelete(mapType *byte, hmap map[any]any, key *any)
+func mapdelete_fast32(mapType *byte, hmap map[any]any, key uint32)
+func mapdelete_fast64(mapType *byte, hmap map[any]any, key uint64)
+func mapdelete_faststr(mapType *byte, hmap map[any]any, key string)
+func mapiternext(hiter *any)
+func mapclear(mapType *byte, hmap map[any]any)
+</code></pre>
+<pre><code class="language-go">//go 代码如下
+var m1 = make(map[any]any, 10)
+m1[10] = &quot;20&quot;
+a := m1[10]
+//对应的汇编如下
+//CALL     runtime.mapassign(SB) 写
+//CALL    runtime.mapaccess1(SB) 读
+</code></pre>
+<pre><code class="language-go">//runtime/map.go
+//省略部分判断代码
+func mapaccess1(t *maptype, h *hmap, key unsafe.Pointer) unsafe.Pointer {
+	//根据key,以及初始化map随机哈希种子hash0,生成哈希
+	hash := t.Hasher(key, uintptr(h.hash0))
+	//例如B=4,则m=1&lt;&lt;4-1
+	m := bucketMask(h.B)
+	//寻找hmap.buckes里对应的桶,hash&amp;m,例如11&amp;01=1,一半hash长度远超m的长度,而m取决于buckets的个数,无需关心hash具体的值
+	b := (*bmap)(add(h.buckets, (hash&amp;m)*uintptr(t.BucketSize)))
+	//有旧的桶,扩容逻辑,下文详细讲解
+	if c := h.oldbuckets; c != nil {
+		if !h.sameSizeGrow() {
+			// There used to be half as many buckets; mask down one more power of two.
+			m &gt;&gt;= 1
+		}
+		oldb := (*bmap)(add(c, (hash&amp;m)*uintptr(t.BucketSize)))
+		if !evacuated(oldb) {
+			b = oldb
+		}
+	}
+	//64位hash&gt;&gt;8*8-8,获取前8位 如(top)xxx....xxxxxx
+	top := tophash(hash)
+bucketloop:
+	for ; b != nil; b = b.overflow(t) {
+		//bucketCnt 8个
+		for i := uintptr(0); i &lt; bucketCnt; i++ {
+			//根据top选bmap里对应的key,value
+			if b.tophash[i] != top {
+				if b.tophash[i] == emptyRest {
+					break bucketloop
+				}
+				continue
+			}
+			//找到了key
+			k := add(unsafe.Pointer(b), dataOffset+i*uintptr(t.KeySize))
+			if t.IndirectKey() {
+				k = *((*unsafe.Pointer)(k))
+			}
+			//与我们要找的key相同,返回值
+			if t.Key.Equal(key, k) {
+				e := add(unsafe.Pointer(b), dataOffset+bucketCnt*uintptr(t.KeySize)+i*uintptr(t.ValueSize))
+				if t.IndirectElem() {
+					e = *((*unsafe.Pointer)(e))
+				}
+				return e
+			}
+		}
+	}
+	return unsafe.Pointer(&amp;zeroVal[0])
+}
+</code></pre>
+<h2 id="map的写"><a class="header" href="#map的写">map的写</a></h2>
+<p>上文我们详细分析了map的读,写仅在该基础里添加替换以及扩容,我们仅分析扩容</p>
+<ul>
+<li>具体过程为达到最大负载系数或溢出桶太多执行扩容,再通过growWork迁移旧bucket里的元素</li>
+</ul>
+<pre><code class="language-go">//runtime/map.go
+func mapassign(t *maptype, h *hmap, key unsafe.Pointer) unsafe.Pointer {
+again:
+	if h.growing() {
+        growWork(t, h, bucket)
+    }
+	//h.count+1&gt;8 &amp;&amp;  h.count &gt; bucket*6.5 ||  bucket count &lt; noverflow &lt; 2^15 
+    if !h.growing() &amp;&amp; (overLoadFactor(h.count+1, h.B) || tooManyOverflowBuckets(h.noverflow, h.B)) {
+        hashGrow(t, h)
+        goto again // Growing the table invalidates everything, so try again
+    }
+}
+</code></pre>
+<p>执行hashGrow扩容,逻辑跟map初始化的逻辑蕾丝,将旧的buckets放入h.oldbuckets,重新初始化一个新的buckets数组<br />
+map元素的迁移在<code> growWork(t, h, bucket)</code>中</p>
+<pre><code class="language-go">//runtime/map.go
+func hashGrow(t *maptype, h *hmap) {
+	// If we've hit the load factor, get bigger.
+	// Otherwise, there are too many overflow buckets,
+	// so keep the same number of buckets and &quot;grow&quot; laterally.
+	bigger := uint8(1)
+	if !overLoadFactor(h.count+1, h.B) {
+		bigger = 0
+		h.flags |= sameSizeGrow
+	}
+	oldbuckets := h.buckets
+	newbuckets, nextOverflow := makeBucketArray(t, h.B+bigger, nil)
+
+	flags := h.flags &amp;^ (iterator | oldIterator)
+	if h.flags&amp;iterator != 0 {
+		flags |= oldIterator
+	}
+	// commit the grow (atomic wrt gc)
+	h.B += bigger
+	h.flags = flags
+	h.oldbuckets = oldbuckets
+	h.buckets = newbuckets
+	h.nevacuate = 0
+	h.noverflow = 0
+
+	if h.extra != nil &amp;&amp; h.extra.overflow != nil {
+		// Promote current overflow buckets to the old generation.
+		if h.extra.oldoverflow != nil {
+			throw(&quot;oldoverflow is not nil&quot;)
+		}
+		h.extra.oldoverflow = h.extra.overflow
+		h.extra.overflow = nil
+	}
+	if nextOverflow != nil {
+		if h.extra == nil {
+			h.extra = new(mapextra)
+		}
+		h.extra.nextOverflow = nextOverflow
+	}
+	// the actual copying of the hash table data is done incrementally
+	// by growWork() and evacuate().
+}
+</code></pre>
+<p>growWork为扩容最后一步,执行扩容后map里元素的整理,大体逻辑如下图</p>
+<ul>
+<li>需注意每次赋值/删除 触发growWork仅拌匀当前命中的bucket,顺带多搬运一个bucket</li>
+<li>将一个bucket里的数据分流到两个bucket里</li>
+<li>advanceEvacuationMark 哈希的计数器,扩容完成后清理oldbuckets
+<img src="img/bucket_grow.png" alt="bucket_grow.png" /></li>
+</ul>
+<pre><code class="language-go">func growWork(t *maptype, h *hmap, bucket uintptr) {
+	evacuate(t, h, bucket&amp;h.oldbucketmask())
+	if h.growing() {
+		evacuate(t, h, h.nevacuate)
+	}
+}
+func evacuate(t *maptype, h *hmap, oldbucket uintptr) {
+	//旧的buckets
+	b := (*bmap)(add(h.oldbuckets, oldbucket*uintptr(t.BucketSize)))
+	newbit := h.noldbuckets()
+	//x,y如上图将oldbuckets迁移到buckets过程,省略了部分代码
+	if !evacuated(b) {
+		var xy [2]evacDst
+		x := &amp;xy[0]
+		x.b = (*bmap)(add(h.buckets, oldbucket*uintptr(t.BucketSize)))
+		x.k = add(unsafe.Pointer(x.b), dataOffset)
+		x.e = add(x.k, bucketCnt*uintptr(t.KeySize))
+
+		if !h.sameSizeGrow() {
+			// Only calculate y pointers if we're growing bigger.
+			// Otherwise GC can see bad pointers.
+			y := &amp;xy[1]
+			y.b = (*bmap)(add(h.buckets, (oldbucket+newbit)*uintptr(t.BucketSize)))
+			y.k = add(unsafe.Pointer(y.b), dataOffset)
+			y.e = add(y.k, bucketCnt*uintptr(t.KeySize))
+		}
+	}
+
+	if oldbucket == h.nevacuate {
+		advanceEvacuationMark(h, t, newbit)
+	}
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../go/base/5.sync下.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../go/base/7.slice详解.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../go/base/5.sync下.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../go/base/7.slice详解.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

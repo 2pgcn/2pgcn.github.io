@@ -1,0 +1,319 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>呼叫中心设计</title>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-NBTSW2TH');</script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-N6K15VE892"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-N6K15VE892');
+        </script>
+        <!-- End Google Tag Manager -->
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NBTSW2TH"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> 最近更新</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.</strong> golang</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.1.</strong> golang基础数据结构</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../go/base/1.channel详解.html"><strong aria-hidden="true">2.1.1.</strong> channel</a></li><li class="chapter-item "><a href="../go/base/2.time详解.html"><strong aria-hidden="true">2.1.2.</strong> time</a></li><li class="chapter-item "><a href="../go/base/3.select详解.html"><strong aria-hidden="true">2.1.3.</strong> select</a></li><li class="chapter-item "><a href="../go/base/4.sync上.html"><strong aria-hidden="true">2.1.4.</strong> sync上</a></li><li class="chapter-item "><a href="../go/base/5.sync下.html"><strong aria-hidden="true">2.1.5.</strong> sync下</a></li><li class="chapter-item "><a href="../go/base/6.map详解.html"><strong aria-hidden="true">2.1.6.</strong> map</a></li><li class="chapter-item "><a href="../go/base/7.slice详解.html"><strong aria-hidden="true">2.1.7.</strong> slice</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> golang runtime源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../go/runtime/1.golang源码阅读-go-start.html"><strong aria-hidden="true">2.2.1.</strong> go启动流程</a></li><li class="chapter-item "><a href="../go/runtime/2.golang源码阅读-schedule1.html"><strong aria-hidden="true">2.2.2.</strong> schedule上</a></li><li class="chapter-item "><a href="../go/runtime/3.golang源码阅读-schedule2.html"><strong aria-hidden="true">2.2.3.</strong> schedule下</a></li><li class="chapter-item "><a href="../go/runtime/4.golang源码阅读-sysmon详解.html"><strong aria-hidden="true">2.2.4.</strong> sysmon详解</a></li><li class="chapter-item "><a href="../go/runtime/5.golang源码阅读-内存分配.html"><strong aria-hidden="true">2.2.5.</strong> 内存分配</a></li><li class="chapter-item "><a href="../go/runtime/6.golang源码阅读-netpoll详解.html"><strong aria-hidden="true">2.2.6.</strong> netpoll详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.3.</strong> golang杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.3.1.</strong> 长连接无损迁移</div></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> 队列</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">3.1.</strong> kafka</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 云原生</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.1.</strong> 前置知识</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../k8s/base/k8s核心对象.html"><strong aria-hidden="true">4.1.1.</strong> k8s核心对象</a></li><li class="chapter-item "><a href="../k8s/base/docker详解.html"><strong aria-hidden="true">4.1.2.</strong> docker原理</a></li><li class="chapter-item "><a href="../k8s/base/pod详解.html"><strong aria-hidden="true">4.1.3.</strong> pod详解</a></li><li class="chapter-item "><a href="../k8s/base/k8s-schedule详解.html"><strong aria-hidden="true">4.1.4.</strong> schedule</a></li><li class="chapter-item "><a href="../k8s/base/apiserver访问控制.html"><strong aria-hidden="true">4.1.5.</strong> apiserver访问控制</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.2.</strong> 网关</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.2.1.</strong> traefik</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../gateway/traefik/1.traefik基础概念.html"><strong aria-hidden="true">4.2.1.1.</strong> traefik基础概念</a></li><li class="chapter-item "><a href="../gateway/traefik/4.traefik启动流程源码分析.html"><strong aria-hidden="true">4.2.1.2.</strong> traefik启动流程</a></li><li class="chapter-item "><a href="../gateway/traefik/5.traefik-EntryPoints详解上.html"><strong aria-hidden="true">4.2.1.3.</strong> traefik-EntryPoints详解</a></li><li class="chapter-item "><a href="../gateway/traefik/6.traefik-router详解.html"><strong aria-hidden="true">4.2.1.4.</strong> traefik-router详解</a></li><li class="chapter-item "><a href="../gateway/traefik/7.traefik-services详解.html"><strong aria-hidden="true">4.2.1.5.</strong> traefik-services详解</a></li><li class="chapter-item "><a href="../gateway/traefik/8.traefik-provider详解.html"><strong aria-hidden="true">4.2.1.6.</strong> traefik-provider详解</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.3.</strong> serviceMesh</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.4.</strong> k8s控制器源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../k8s/controller/replicaset详解.html"><strong aria-hidden="true">4.4.1.</strong> replicaset详解</a></li><li class="chapter-item "><a href="../k8s/controller/deploy详解.html"><strong aria-hidden="true">4.4.2.</strong> deploy详解</a></li><li class="chapter-item "><a href="../k8s/controller/endpoint详解.html"><strong aria-hidden="true">4.4.3.</strong> endpoint详解</a></li><li class="chapter-item "><a href="../k8s/controller/services详解.html"><strong aria-hidden="true">4.4.4.</strong> services详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.5.</strong> k8s cni源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../k8s/cni/cni详解.html"><strong aria-hidden="true">4.5.1.</strong> cni基础</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.6.</strong> k8s cri源码分析</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 网络</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../network/tcp-1-环境.html"><strong aria-hidden="true">5.1.</strong> 环境</a></li><li class="chapter-item "><a href="../network/icmp.html"><strong aria-hidden="true">5.2.</strong> icmp协议</a></li><li class="chapter-item "><a href="../network/tcp-2-三次握手.html"><strong aria-hidden="true">5.3.</strong> tcp三次握手</a></li><li class="chapter-item "><a href="../network/tcp压测客户端.html"><strong aria-hidden="true">5.4.</strong> tcp压测</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../other/linux1-ssh连接失败.html"><strong aria-hidden="true">6.1.</strong> ssh连接失败</a></li><li class="chapter-item "><a href="../other/freeswitch_install.html"><strong aria-hidden="true">6.2.</strong> freeswitch安装</a></li><li class="chapter-item expanded "><a href="../other/freeswitch搭建呼叫中心-1方案设计.html" class="active"><strong aria-hidden="true">6.3.</strong> 呼叫中心设计</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> nginx</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../gateway/nginx/nginx1-搭建调试环境.html"><strong aria-hidden="true">7.1.</strong> 开发环境</a></li><li class="chapter-item "><a href="../gateway/nginx/nginx2-基础架构.html"><strong aria-hidden="true">7.2.</strong> 基础架构</a></li><li class="chapter-item "><a href="../gateway/nginx/nginx3-基础数据结构.html"><strong aria-hidden="true">7.3.</strong> 基础数据结构</a></li><li class="chapter-item "><a href="../gateway/nginx/nginx4-内存管理.html"><strong aria-hidden="true">7.4.</strong> 内存管理</a></li><li class="chapter-item "><a href="../gateway/nginx/nginx5-http.html"><strong aria-hidden="true">7.5.</strong> http</a></li><li class="chapter-item "><a href="../gateway/nginx/nginx6-手写hello-handler.html"><strong aria-hidden="true">7.6.</strong> 手写handler</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h3 id="呼叫中心方案设计"><a class="header" href="#呼叫中心方案设计">呼叫中心方案设计</a></h3>
+<p>freeswitch教程比较零散,放了几篇整理好的教程,可自行查看阅读,由于我们近需要一个呼叫中心,与我们的crm结合,所以我们暂时只需要明白一下概念就行了</p>
+<ul>
+<li><a href="https://github.com/Omid-Mohajerani/freeswitch">快速入门系列</a></li>
+<li><a href="https://github.com/nwaycn/FreeSwitch-Train-doc/blob/master/%E4%BC%81%E4%B8%9A%E9%80%9A%E4%BF%A1%E4%B8%8EFreeSwitchV1.2.pdf">使用教程</a></li>
+<li><a href="https://weread.qq.com/web/bookDetail/d4c326d0597da4d4c96fa48">freeswitch权威指南</a></li>
+<li><a href="https://freeswitch.org.cn/books/references/">freeswitch参考手册</a></li>
+<li><a href="https://freeswitch.org.cn/books/case-study/">freeswitch案例大全</a></li>
+<li><a href="https://www.wuweixian.com/ipphone/freeswitch/1002/">freeswitchVOIP实战</a></li>
+</ul>
+<p>我们可以联想下以下问题</p>
+<ul>
+<li>比如我们有A公司,B公司,AB公司的数据肯定都相互独立,对应freeswitch里的域,也就是domian,公司里的部门对应组的概念group</li>
+<li>然后一个公司里有1,2,3号坐席,对应freeswitch里directory里模块,也就是我们的sip坐席</li>
+<li>然后1号坐席需要拨打一个外部电话如176xxxx,xxxx,freeswitch需要中转到三大运营商sip网关,具体走哪个号码外呼出去,就是freeswitch里的路由规则<br />
+对应dialplan里extension</li>
+<li>然后要外呼走的线路,需要我们提前注册到freeswitch的网关上,然后通过网关外呼出去,这就是一通正常的电话了
+图如下</li>
+</ul>
+<pre><code class="language-dot process">digraph {
+    &quot;公司&quot; -&gt; &quot;坐席&quot;-&gt;&quot;路由&quot;-&gt;&quot;网关&quot;
+}
+</code></pre>
+<h3 id="freeswitch与业务集成"><a class="header" href="#freeswitch与业务集成">freeswitch与业务集成</a></h3>
+<p>freeswitch默认是使用xml文件配置,比如我们需要增加sip坐席,不可能登陆上服务器手动添加xml文件,所以我们将xml文件通过xml_curl模块,与freeswhitch对接<br />
+公司坐席管理通过我们业务下发给freeswitch,自带的路由模块太死板,我们系统外呼路由通过esl去控制,外呼线路通过xml去下发。<br />
+基本的功能梳理清楚了,下面我们把xml以及esl打开重新编译</p>
+<pre><code class="language-shell">vim ~/work/freeswitch/freeswitch/modules.conf
+#xml_int/mod_xml_curl -&gt; xml_int/mod_xml_curl
+#database/mod_mariadb -&gt; database/mod_mariadb
+</code></pre>
+<p>mod_xml_curl支持以下4个模块的配置</p>
+<ul>
+<li>dialplan 呼叫路由</li>
+<li>directory注册用户配置</li>
+<li>configuration 核心配置</li>
+<li>phrases
+开启后重新编译freeswitch,安装成功后mod下面会出现mod_xml_curl.so</li>
+</ul>
+<pre><code class="language-shell">root@node1:~# ls /usr/local/freeswitch/mod/mod_xml_curl.so
+/usr/local/freeswitch/mod/mod_xml_curl.so
+</code></pre>
+<p>然后启用mod_xml_curl模块</p>
+<pre><code class="language-shell">root@node1:~# vim /usr/local/freeswitch/conf/autoload_configs/modules.conf.xml
+开启 &lt;load module=&quot;mod_xml_curl&quot;/&gt;
+</code></pre>
+<p>修改mod_xml_curl 获取http配置地址,我们目前仅配置directory</p>
+<pre><code class="language-shell">cat /usr/local/freeswitch/conf/autoload_configs/xml_curl.conf.xml
+&lt;configuration name=&quot;xml_curl.conf&quot; description=&quot;cURL XML Gateway&quot;&gt;
+  &lt;bindings&gt;
+	  &lt;binding name=&quot;example&quot;&gt;
+		  &lt;param name=&quot;gateway-url&quot; value=&quot;http://192.168.31.229:8081/fs_xml_config&quot; bindings=&quot;directory&quot; /&gt;
+		  &lt;param name=&quot;method&quot; value=&quot;POST&quot;/&gt;
+</code></pre>
+<p>重点添加gateway-url,请求方法为post,http(s)地址为自定义http server地址,freeswitch需要配置的时候会请求该地址<br />
+详细地址：<a href="https://developer.signalwire.com/freeswitch/FreeSWITCH-Explained/Modules/mod_xml_curl_1049001/#configuration">官网文档</a></p>
+<h1 id="2fsxml通过http配置directory"><a class="header" href="#2fsxml通过http配置directory">2.fsxml通过http配置directory</a></h1>
+<p>由于没找到具体的官方xml_curl请求参数响应内容的文档,找了个gui通过抓包的形式抓取了一份,本章将通过配置directory下的domain,group,users带大家<br />
+详细了解下这一块的配置,我们先配置最简单的便于调试,关闭sofia_sip模块里多余的配置,仅开启了internal.xml,
+动态配置sofia_sip为xml_curl模块里的configuration模块,后续章节讲解</p>
+<pre><code class="language-shell">root@node1:/usr/local/freeswitch/conf/sip_profiles# ls
+external  external.xml.bak  internal.xml
+</code></pre>
+<p>下面我们启动我们的httpserver,看下freeswitch的请求,具体的请求如下,我们重点关注以下字段即可</p>
+<ul>
+<li>&quot;profile&quot;:&quot;internal&quot;</li>
+<li>&quot;purpose&quot;:&quot;gateways&quot;,</li>
+<li>&quot;section&quot;:&quot;directory&quot;,</li>
+<li>&quot;tag_name&quot;:&quot;&quot;</li>
+</ul>
+<pre><code class="language-shell">2023/12/13 01:45:16 {&quot;Core-UUID&quot;:&quot;12b9d16b-03d5-4fea-8c30-c2e84d4db6a2&quot;,&quot;Event-Calling-File&quot;:&quot;sofia.c&quot;,&quot;Event-Calling-Function&quot;:&quot;launch_sofia_worker_thread&quot;,&quot;Event-Calling-Line-Number&quot;:&quot;3073&quot;,&quot;Event-Date-GMT&quot;:&quot;Tue, 12 Dec 2023 17:45:16 GMT&quot;,&quot;Event-Date-Local&quot;:&quot;2023-12-13 01:45:16&quot;,&quot;Event-Date-Timestamp&quot;:&quot;1702403116162385&quot;,&quot;Event-Name&quot;:&quot;REQUEST_PARAMS&quot;,&quot;Event-Sequence&quot;:&quot;34&quot;,&quot;FreeSWITCH-Hostname&quot;:&quot;node1&quot;,&quot;FreeSWITCH-IPv4&quot;:&quot;192.168.31.49&quot;,&quot;FreeSWITCH-IPv6&quot;:&quot;::1&quot;,&quot;FreeSWITCH-Switchname&quot;:&quot;node1&quot;,&quot;hostname&quot;:&quot;node1&quot;,&quot;key_name&quot;:&quot;&quot;,&quot;key_value&quot;:&quot;&quot;,&quot;profile&quot;:&quot;internal&quot;,&quot;purpose&quot;:&quot;gateways&quot;,&quot;section&quot;:&quot;directory&quot;,&quot;tag_name&quot;:&quot;&quot;}
+2023/12/13 01:45:18 {&quot;Core-UUID&quot;:&quot;12b9d16b-03d5-4fea-8c30-c2e84d4db6a2&quot;,&quot;Event-Calling-File&quot;:&quot;switch_core.c&quot;,&quot;Event-Calling-Function&quot;:&quot;switch_load_network_lists&quot;,&quot;Event-Calling-Line-Number&quot;:&quot;1638&quot;,&quot;Event-Date-GMT&quot;:&quot;Tue, 12 Dec 2023 17:45:18 GMT&quot;,&quot;Event-Date-Local&quot;:&quot;2023-12-13 01:45:18&quot;,&quot;Event-Date-Timestamp&quot;:&quot;1702403118276339&quot;,&quot;Event-Name&quot;:&quot;GENERAL&quot;,&quot;Event-Sequence&quot;:&quot;541&quot;,&quot;FreeSWITCH-Hostname&quot;:&quot;node1&quot;,&quot;FreeSWITCH-IPv4&quot;:&quot;192.168.31.49&quot;,&quot;FreeSWITCH-IPv6&quot;:&quot;::1&quot;,&quot;FreeSWITCH-Switchname&quot;:&quot;node1&quot;,&quot;domain&quot;:&quot;192.168.31.49&quot;,&quot;hostname&quot;:&quot;node1&quot;,&quot;key_name&quot;:&quot;name&quot;,&quot;key_value&quot;:&quot;192.168.31.49&quot;,&quot;purpose&quot;:&quot;network-list&quot;,&quot;section&quot;:&quot;directory&quot;,&quot;tag_name&quot;:&quot;domain&quot;}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../other/freeswitch_install.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../gateway/nginx/nginx1-搭建调试环境.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../other/freeswitch_install.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../gateway/nginx/nginx1-搭建调试环境.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

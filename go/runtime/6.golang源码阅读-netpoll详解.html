@@ -1,0 +1,458 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>netpoll详解</title>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-NBTSW2TH');</script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-N6K15VE892"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-N6K15VE892');
+        </script>
+        <!-- End Google Tag Manager -->
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NBTSW2TH"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../index.html"><strong aria-hidden="true">1.</strong> 最近更新</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.</strong> golang</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.1.</strong> golang基础数据结构</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../go/base/1.channel详解.html"><strong aria-hidden="true">2.1.1.</strong> channel</a></li><li class="chapter-item "><a href="../../go/base/2.time详解.html"><strong aria-hidden="true">2.1.2.</strong> time</a></li><li class="chapter-item "><a href="../../go/base/3.select详解.html"><strong aria-hidden="true">2.1.3.</strong> select</a></li><li class="chapter-item "><a href="../../go/base/4.sync上.html"><strong aria-hidden="true">2.1.4.</strong> sync上</a></li><li class="chapter-item "><a href="../../go/base/5.sync下.html"><strong aria-hidden="true">2.1.5.</strong> sync下</a></li><li class="chapter-item "><a href="../../go/base/6.map详解.html"><strong aria-hidden="true">2.1.6.</strong> map</a></li><li class="chapter-item "><a href="../../go/base/7.slice详解.html"><strong aria-hidden="true">2.1.7.</strong> slice</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.2.</strong> golang runtime源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../go/runtime/1.golang源码阅读-go-start.html"><strong aria-hidden="true">2.2.1.</strong> go启动流程</a></li><li class="chapter-item "><a href="../../go/runtime/2.golang源码阅读-schedule1.html"><strong aria-hidden="true">2.2.2.</strong> schedule上</a></li><li class="chapter-item "><a href="../../go/runtime/3.golang源码阅读-schedule2.html"><strong aria-hidden="true">2.2.3.</strong> schedule下</a></li><li class="chapter-item "><a href="../../go/runtime/4.golang源码阅读-sysmon详解.html"><strong aria-hidden="true">2.2.4.</strong> sysmon详解</a></li><li class="chapter-item "><a href="../../go/runtime/5.golang源码阅读-内存分配.html"><strong aria-hidden="true">2.2.5.</strong> 内存分配</a></li><li class="chapter-item expanded "><a href="../../go/runtime/6.golang源码阅读-netpoll详解.html" class="active"><strong aria-hidden="true">2.2.6.</strong> netpoll详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.3.</strong> golang杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.3.1.</strong> 长连接无损迁移</div></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> 队列</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">3.1.</strong> kafka</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 云原生</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.1.</strong> 前置知识</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/base/k8s核心对象.html"><strong aria-hidden="true">4.1.1.</strong> k8s核心对象</a></li><li class="chapter-item "><a href="../../k8s/base/docker详解.html"><strong aria-hidden="true">4.1.2.</strong> docker原理</a></li><li class="chapter-item "><a href="../../k8s/base/pod详解.html"><strong aria-hidden="true">4.1.3.</strong> pod详解</a></li><li class="chapter-item "><a href="../../k8s/base/k8s-schedule详解.html"><strong aria-hidden="true">4.1.4.</strong> schedule</a></li><li class="chapter-item "><a href="../../k8s/base/apiserver访问控制.html"><strong aria-hidden="true">4.1.5.</strong> apiserver访问控制</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.2.</strong> 网关</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.2.1.</strong> traefik</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/traefik/1.traefik基础概念.html"><strong aria-hidden="true">4.2.1.1.</strong> traefik基础概念</a></li><li class="chapter-item "><a href="../../gateway/traefik/4.traefik启动流程源码分析.html"><strong aria-hidden="true">4.2.1.2.</strong> traefik启动流程</a></li><li class="chapter-item "><a href="../../gateway/traefik/5.traefik-EntryPoints详解上.html"><strong aria-hidden="true">4.2.1.3.</strong> traefik-EntryPoints详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/6.traefik-router详解.html"><strong aria-hidden="true">4.2.1.4.</strong> traefik-router详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/7.traefik-services详解.html"><strong aria-hidden="true">4.2.1.5.</strong> traefik-services详解</a></li><li class="chapter-item "><a href="../../gateway/traefik/8.traefik-provider详解.html"><strong aria-hidden="true">4.2.1.6.</strong> traefik-provider详解</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.3.</strong> serviceMesh</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.4.</strong> k8s控制器源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/controller/replicaset详解.html"><strong aria-hidden="true">4.4.1.</strong> replicaset详解</a></li><li class="chapter-item "><a href="../../k8s/controller/deploy详解.html"><strong aria-hidden="true">4.4.2.</strong> deploy详解</a></li><li class="chapter-item "><a href="../../k8s/controller/endpoint详解.html"><strong aria-hidden="true">4.4.3.</strong> endpoint详解</a></li><li class="chapter-item "><a href="../../k8s/controller/services详解.html"><strong aria-hidden="true">4.4.4.</strong> services详解</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.5.</strong> k8s cni源码分析</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../k8s/cni/cni详解.html"><strong aria-hidden="true">4.5.1.</strong> cni基础</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">4.6.</strong> k8s cri源码分析</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 网络</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../network/tcp-1-环境.html"><strong aria-hidden="true">5.1.</strong> 环境</a></li><li class="chapter-item "><a href="../../network/icmp.html"><strong aria-hidden="true">5.2.</strong> icmp协议</a></li><li class="chapter-item "><a href="../../network/tcp-2-三次握手.html"><strong aria-hidden="true">5.3.</strong> tcp三次握手</a></li><li class="chapter-item "><a href="../../network/tcp压测客户端.html"><strong aria-hidden="true">5.4.</strong> tcp压测</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 杂项</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../other/linux1-ssh连接失败.html"><strong aria-hidden="true">6.1.</strong> ssh连接失败</a></li><li class="chapter-item "><a href="../../other/freeswitch_install.html"><strong aria-hidden="true">6.2.</strong> freeswitch安装</a></li><li class="chapter-item "><a href="../../other/freeswitch搭建呼叫中心-1方案设计.html"><strong aria-hidden="true">6.3.</strong> 呼叫中心设计</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> nginx</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gateway/nginx/nginx1-搭建调试环境.html"><strong aria-hidden="true">7.1.</strong> 开发环境</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx2-基础架构.html"><strong aria-hidden="true">7.2.</strong> 基础架构</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx3-基础数据结构.html"><strong aria-hidden="true">7.3.</strong> 基础数据结构</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx4-内存管理.html"><strong aria-hidden="true">7.4.</strong> 内存管理</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx5-http.html"><strong aria-hidden="true">7.5.</strong> http</a></li><li class="chapter-item "><a href="../../gateway/nginx/nginx6-手写hello-handler.html"><strong aria-hidden="true">7.6.</strong> 手写handler</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="1-设计原理"><a class="header" href="#1-设计原理">1 设计原理</a></h2>
+<p>由于我们服务器基本上都是基于linux,所以本文我们只讲golang在linux的实现</p>
+<h3 id="11-io模型"><a class="header" href="#11-io模型">1.1 I/O模型</a></h3>
+<p>操作系统中包含阻塞I/O,非阻塞I/O,信号驱动I/O,异步I/O,多路复用I/O,我们本文仅介绍多路复用I/O
+也就是golang网络轮训器实现的原理。</p>
+<h3 id="12-多路复用io"><a class="header" href="#12-多路复用io">1.2 多路复用io</a></h3>
+<ul>
+<li>select select有了epoll后就很少用了,本文大概过一下,select仅支持1024个文件描述符(数组大小为1024),即fd,内存开销大,时间复杂度为便利数组O(n)</li>
+<li>epoll 2.8内核版本之前会惊群,有兴趣的读者可以看看//todo 写一篇关于epoll的文章,对照源码以及画图更好讲述
+epoll的数据结构为rbtree对&lt;fd,event&gt;的存储,ready队列存储就绪io,所以时间复杂度为O(logn)
+epoll的回调,分为et(边缘触发,有消息变化触发一次),lt(水平触发,消息回调触发多次)</li>
+</ul>
+<!--more-->
+<h2 id="2-golang-tcp-netpoll"><a class="header" href="#2-golang-tcp-netpoll">2 golang tcp netpoll</a></h2>
+<p>golang netpoll在linux上是基于epoll封装的,我们先看下初始化的流程
+<code>net.ListenTcp</code></p>
+<pre><code class="language-go">// src/net/tcpsock.go
+func ListenTCP(network string, laddr *TCPAddr){}
+#src/net/tcpsock_posix.go
+-&gt;fd, err := internetSocket(ctx, sl.network, laddr, nil, syscall.SOCK_STREAM, 0, &quot;listen&quot;, ctrlCtxFn)
+// src/net/ipsock_posix.go
+--&gt;socket(ctx, net, family, sotype, proto, ipv6only, laddr, raddr, ctrlCtxFn)
+//src/net/sock_posix.go
+---&gt;socket(ctx context.Context, net string, family, sotype, proto int, ipv6only bool, laddr, raddr sockaddr, ctrlCtxFn func(context.Context, string, string, syscall.RawConn) error) (fd *netFD, err error)
+----&gt;err := fd.listenStream(ctx, laddr, listenerBacklog(), ctrlCtxFn);
+-----&gt;syscall.Bind(fd.pfd.Sysfd, lsa);
+-------&gt;fd.init();
+// src/net/fd_unix.go
+--------&gt;fd.pfd.Init(fd.net, true)
+---------&gt;serverInit.Do(runtime_pollServerInit)
+//return pollDesc
+----------&gt;ctx, errno := runtime_pollOpen(uintptr(fd.Sysfd))
+</code></pre>
+<p>上述是go调用<code>net.listenTcp</code>的流程,对应系统调用为</p>
+<ul>
+<li>调用syscall.Bind,</li>
+<li>调用syscall.Listen</li>
+<li>生成fd,查看epoll是否初始化,未初始化则初始化</li>
+<li>将fd绑定到对应的epoll事件中</li>
+<li>设置成非阻塞模式</li>
+<li>返回pollDesc，每一个listen都对应着一个pollDesc,后文我们在详细了解runtime.epoll里相关的结构体与函数
+接下来我们看下runtime里poll初始化的具体代码,linux epoll为例,对应上文runtime_pollServerInit函数</li>
+</ul>
+<pre><code class="language-go">// src/runtime/netpoll_epoll.go
+func netpollinit() {
+	var errno uintptr
+	//创建epoll描述符
+	epfd, errno = syscall.EpollCreate1(syscall.EPOLL_CLOEXEC)
+	if errno != 0 {
+		println(&quot;runtime: epollcreate failed with&quot;, errno)
+		throw(&quot;runtime: netpollinit failed&quot;)
+	}
+	r, w, errpipe := nonblockingPipe()
+	if errpipe != 0 {
+		println(&quot;runtime: pipe failed with&quot;, -errpipe)
+		throw(&quot;runtime: pipe failed&quot;)
+	}
+	ev := syscall.EpollEvent{
+		Events: syscall.EPOLLIN,
+	}
+	*(**uintptr)(unsafe.Pointer(&amp;ev.Data)) = &amp;netpollBreakRd
+	//添加到epoll事件上
+	errno = syscall.EpollCtl(epfd, syscall.EPOLL_CTL_ADD, r, &amp;ev)
+	if errno != 0 {
+		println(&quot;runtime: epollctl failed with&quot;, errno)
+		throw(&quot;runtime: epollctl failed&quot;)
+	}
+	netpollBreakRd = uintptr(r)
+	netpollBreakWr = uintptr(w)
+}
+</code></pre>
+<p>然后我们再来看下<code>runtime_pollOpen</code>函数,主要是将fd添加到epoll中,下面我们看下,怎么处理对fd的读写事件</p>
+<pre><code class="language-go">// src/runtime/netpoll.go
+//go:linkname poll_runtime_pollOpen internal/poll.runtime_pollOpen
+func poll_runtime_pollOpen(fd uintptr) (*pollDesc, int) {
+	errno := netpollopen(fd, pd)
+}
+func netpollopen(fd uintptr, pd *pollDesc) uintptr {
+    var ev syscall.EpollEvent
+	//设置成epoll ET模式(边缘触发,仅监控fd发生更改时通知,比如仅有新数据来时通知)
+    ev.Events = syscall.EPOLLIN | syscall.EPOLLOUT | syscall.EPOLLRDHUP | syscall.EPOLLET
+    *(**pollDesc)(unsafe.Pointer(&amp;ev.Data)) = pd
+	//将listen对应的fd添加到epoll事件中
+    return syscall.EpollCtl(epfd, syscall.EPOLL_CTL_ADD, int32(fd), &amp;ev)
+}
+</code></pre>
+<h3 id="21-golang-netpoll-accept"><a class="header" href="#21-golang-netpoll-accept">2.1 golang netpoll accept</a></h3>
+<p>通过listen.accept()可以获取一个conn结构体,后续的读写操作都基于conn对象,下面我们看下conn里封装了哪些对象,以及流程</p>
+<pre><code class="language-go">func (fd *netFD) accept() (netfd *netFD, err error) {
+    //for循环读,处理掉了syscall.EAGAIN等,返回则为
+	d, rsa, errcall, err := fd.pfd.Accept()
+	//新建fd
+	netfd, err = newFD(d, fd.family, fd.sotype, fd.net); 
+    //初始化并加入epoll中
+	err = netfd.init()
+	lsa, _ := syscall.Getsockname(netfd.pfd.Sysfd)
+	netfd.setAddr(netfd.addrFunc()(lsa), netfd.addrFunc()(rsa))
+	return netfd, nil
+}
+</code></pre>
+<h3 id="22-golang-netpoll-readwrite"><a class="header" href="#22-golang-netpoll-readwrite">2.2 golang netpoll read/write</a></h3>
+<p>read/write本质上都是调用的golang runtime里封装好的<code>runtime_pollWait</code>，下面我们重点看下该函数</p>
+<pre><code class="language-go">// src/internal/poll/fd_unix.go
+func (fd *FD) Read(p []byte) (int, error) {
+	for {
+        fd.pd.waitRead(fd.isFile)
+	}
+}
+// src/internal/poll/fd_poll_runtime.go
+func (pd *pollDesc) wait(mode int, isFile bool) error {
+    if pd.runtimeCtx == 0 {
+        return errors.New(&quot;waiting for unsupported file type&quot;)
+    }
+    res := runtime_pollWait(pd.runtimeCtx, mode)
+    return convertErr(res, isFile)
+}
+</code></pre>
+<h3 id="22-golang-netpoll-runtime_pollwait"><a class="header" href="#22-golang-netpoll-runtime_pollwait">2.2 golang netpoll runtime_pollWait</a></h3>
+<p>将调用者陷入gopark状态,等待调度的时候通过netpoll唤醒</p>
+<pre><code class="language-go">func poll_runtime_pollWait(pd *pollDesc, mode int) int {
+	for !netpollblock(pd, int32(mode), false) {
+		errcode = netpollcheckerr(pd, int32(mode))
+		if errcode != pollNoError {
+			return errcode
+		}
+	}
+	return pollNoError
+}
+
+func netpollblock(pd *pollDesc, mode int32, waitio bool) bool {
+	//将该g进入gopark
+	if waitio || netpollcheckerr(pd, mode) == pollNoError {
+		gopark(netpollblockcommit, unsafe.Pointer(gpp), waitReasonIOWait, traceEvGoBlockNet, 5)
+	}
+	// be careful to not lose concurrent pdReady notification
+	old := gpp.Swap(pdNil)
+	if old &gt; pdWait {
+		throw(&quot;runtime: corrupted polldesc&quot;)
+	}
+	return old == pdReady
+}
+</code></pre>
+<p>下面我们回顾下做了哪些事,将读/写初始化fd,然后将fd绑定到epoll里同时调用</p>
+<ul>
+<li>调用net.listen,会检查epoll是否初始化,未初始化则调用 runtime/netpoll.go里的netpollGenericInit()初始化</li>
+<li>然后调用runtime_pollOpen()里通过 pollcache.alloc()从pollDesc链表上拿到获取一个pollDesc</li>
+<li>然后accept/read/write会将对应的fd添加到pollDesc里,同时将对应的g通过gopark阻塞,等待调度的netpoll函数阻塞<br />
+下面我们再来看下runtime里具体的实现</li>
+</ul>
+<h2 id="3-golang-runtime-netpoll"><a class="header" href="#3-golang-runtime-netpoll">3 golang runtime netpoll</a></h2>
+<p>由于不同操作系统实现了自己的io多路复用,go实现了多版本的网络轮训，我们仅讲解linux下的epoll我们先来看下方法</p>
+<h3 id="31-netpoll调度部分"><a class="header" href="#31-netpoll调度部分">3.1 netpoll调度部分</a></h3>
+<p>netpoll通过EpollWait获取对应的事件,并通过netpollready添加到glist里,返回glist链表</p>
+<pre><code class="language-go">func netpoll(delay int64) gList {
+	//省略根据delay计算延时多久调用
+	//事件数组
+	var events [128]syscall.EpollEvent
+retry:
+	//通过EpollWait获取事件的数量
+	n, errno := syscall.EpollWait(epfd, events[:], int32(len(events)), waitms)
+	if errno != 0 {
+		if waitms &gt; 0 {
+			return gList{}
+		}
+		goto retry
+	}
+	//根据事件数量遍历出对应个g
+	var toRun gList
+	for i := int32(0); i &lt; n; i++ {
+		ev := events[i]
+		if ev.Events == 0 {
+			continue
+		}
+
+		if *(**uintptr)(unsafe.Pointer(&amp;ev.Data)) == &amp;netpollBreakRd {
+			if ev.Events != syscall.EPOLLIN {
+				println(&quot;runtime: netpoll: break fd ready for&quot;, ev.Events)
+				throw(&quot;runtime: netpoll: break fd ready for something unexpected&quot;)
+			}
+			if delay != 0 {
+				// netpollBreak could be picked up by a
+				// nonblocking poll. Only read the byte
+				// if blocking.
+				var tmp [16]byte
+				read(int32(netpollBreakRd), noescape(unsafe.Pointer(&amp;tmp[0])), int32(len(tmp)))
+				netpollWakeSig.Store(0)
+			}
+			continue
+		}
+
+		var mode int32
+		if ev.Events&amp;(syscall.EPOLLIN|syscall.EPOLLRDHUP|syscall.EPOLLHUP|syscall.EPOLLERR) != 0 {
+			mode += 'r'
+		}
+		if ev.Events&amp;(syscall.EPOLLOUT|syscall.EPOLLHUP|syscall.EPOLLERR) != 0 {
+			mode += 'w'
+		}
+		if mode != 0 {
+			pd := *(**pollDesc)(unsafe.Pointer(&amp;ev.Data))
+			pd.setEventErr(ev.Events == syscall.EPOLLERR)
+			netpollready(&amp;toRun, pd, mode)
+		}
+	}
+	return toRun
+}
+</code></pre>
+<h3 id="32-netpoll调度位置"><a class="header" href="#32-netpoll调度位置">3.2 netpoll调度位置</a></h3>
+<p>主要是在监控线程 以及每一个m上的findRunnable里</p>
+<ul>
+<li>sysmon()</li>
+<li>findRunnable()</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../go/runtime/5.golang源码阅读-内存分配.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../k8s/base/k8s核心对象.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../go/runtime/5.golang源码阅读-内存分配.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../k8s/base/k8s核心对象.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

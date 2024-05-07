@@ -1,0 +1,2 @@
+[runtime.main]->[newm1]->[newosproc]->[sysmon]
+[sysmon]->[checkdead]->[netpoll]->[retake]->[gc]
